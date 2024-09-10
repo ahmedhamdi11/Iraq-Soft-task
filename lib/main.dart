@@ -1,0 +1,54 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo_app/core/services/service_locator.dart';
+import 'package:todo_app/core/utils/app_router.dart';
+import 'package:todo_app/core/utils/app_themes.dart';
+import 'package:todo_app/observer.dart';
+
+void main() async {
+  await runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // set orientation to portrait only
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    // setup service locator
+    await setupServiceLocator();
+
+    Bloc.observer = MyBlocObserver(); // my bloc observer
+
+    // catch flutter errors
+    FlutterError.onError = (FlutterErrorDetails details) async {
+      log(details.exception.toString(), stackTrace: details.stack);
+    };
+
+    // run the app
+    runApp(const ToDoApp());
+  }, (error, stackTrace) async {
+    log(error.toString(), stackTrace: stackTrace);
+  });
+}
+
+class ToDoApp extends StatelessWidget {
+  const ToDoApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'ToDo',
+        theme: AppThemes.lightTheme,
+        onGenerateRoute: AppRouter.onGenerateRoute,
+      ),
+    );
+  }
+}
