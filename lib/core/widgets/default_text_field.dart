@@ -70,7 +70,11 @@ class DefaultTextField extends StatelessWidget {
       maxLines: maxLines,
       maxLength: maxLength,
       textInputAction: textInputAction,
-      style: textInputStyle ?? AppStyles.text14.copyWith(color: textInputColor),
+      style: textInputStyle ??
+          AppStyles.text14.copyWith(
+            color: textInputColor,
+            fontWeight: FontWeight.w700,
+          ),
       inputFormatters: inputFormatters,
       onTapOutside: onTapOutside ?? (event) => FocusScope.of(context).unfocus(),
       onFieldSubmitted: onFieldSubmitted,
@@ -82,9 +86,11 @@ class DefaultTextField extends StatelessWidget {
         enabledBorder: _fieldBorder(),
         border: _fieldBorder(),
         hintText: hintText,
-        hintStyle: hintStyle ?? AppStyles.text14,
+        hintStyle: hintStyle ?? AppStyles.text14.copyWith(color: kStrokeColor),
         prefixIcon: prefix,
         suffixIcon: suffix,
+        filled: true,
+        fillColor: Colors.white,
         isDense: true,
         contentPadding: contentPadding ??
             EdgeInsets.symmetric(
