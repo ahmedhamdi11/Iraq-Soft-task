@@ -76,7 +76,6 @@ class DefaultTextField extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
       inputFormatters: inputFormatters,
-      onTapOutside: onTapOutside ?? (event) => FocusScope.of(context).unfocus(),
       onFieldSubmitted: onFieldSubmitted,
       onEditingComplete: onEditingComplete,
       onTap: onTap,
