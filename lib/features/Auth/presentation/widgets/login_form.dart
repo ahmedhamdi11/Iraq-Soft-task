@@ -46,7 +46,6 @@ class LoginForm extends StatelessWidget {
             suffix: Icon(
               Icons.visibility_outlined,
               size: 24.r,
-              color: kStrokeColor,
             ),
           ),
 

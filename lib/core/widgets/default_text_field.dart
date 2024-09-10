@@ -89,6 +89,11 @@ class DefaultTextField extends StatelessWidget {
         hintStyle: hintStyle ?? AppStyles.text14.copyWith(color: kStrokeColor),
         prefixIcon: prefix,
         suffixIcon: suffix,
+        suffixIconColor: WidgetStateColor.resolveWith(
+          (states) => states.contains(WidgetState.focused)
+              ? kPrimaryColor
+              : kStrokeColor,
+        ),
         filled: true,
         fillColor: Colors.white,
         isDense: true,
