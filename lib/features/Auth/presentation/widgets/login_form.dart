@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/constants/colors.dart';
 import 'package:todo_app/core/constants/constants.dart';
+import 'package:todo_app/core/utils/app_router.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/widgets/default_button.dart';
 import 'package:todo_app/core/widgets/default_text_field.dart';
@@ -70,7 +71,10 @@ class LoginForm extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  AppRouter.signUpView,
+                ),
                 child: Text(
                   'Sign Up here',
                   style: AppStyles.text14.copyWith(
