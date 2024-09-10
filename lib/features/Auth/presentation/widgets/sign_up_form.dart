@@ -6,6 +6,7 @@ import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/widgets/default_button.dart';
 import 'package:todo_app/core/widgets/default_text_field.dart';
 import 'package:todo_app/features/Auth/presentation/widgets/country_code_picker.dart';
+import 'package:todo_app/features/Auth/presentation/widgets/experience_level_selector.dart';
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({super.key});
@@ -57,12 +58,8 @@ class SignUpForm extends StatelessWidget {
 
             SizedBox(height: 15.h),
 
-            // years of experience field
-            DefaultTextField(
-              onChanged: (v) {},
-              hintText: 'Years of experience...',
-              keyboardType: TextInputType.number,
-            ),
+            // experience level
+            const ExperienceLevelSelector(),
 
             SizedBox(height: 15.h),
 
