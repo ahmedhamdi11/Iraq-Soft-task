@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_app/core/utils/custom_page_route_builder.dart';
+import 'package:todo_app/features/Auth/presentation/controller/login_cubit/login_cubit.dart';
 import 'package:todo_app/features/Auth/presentation/views/login_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/sign_up_view.dart';
 import 'package:todo_app/features/Onboarding/presentation/views/onboarding_view.dart';
@@ -24,7 +26,10 @@ abstract class AppRouter {
       case loginView:
         // This route leads to the OnBoardingView
         return CustomPageRouteBuilder(
-          page: const LoginView(),
+          page: BlocProvider(
+            create: (context) => LoginCubit(),
+            child: const LoginView(),
+          ),
         );
 
       // sign up view route
