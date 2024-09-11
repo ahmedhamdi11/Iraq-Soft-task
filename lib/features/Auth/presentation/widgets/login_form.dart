@@ -33,11 +33,11 @@ class LoginForm extends StatelessWidget {
 
           // phone number
           DefaultTextField(
-            onChanged: (v) {},
+            onChanged: (v) => cubit.phone = v,
             hintText: '123 456-7890',
             keyboardType: TextInputType.number,
             prefix: CustomCountryCodePicker(
-              onChanged: (c) {},
+              onChanged: (c) => cubit.countryCode = c.dialCode ?? '+20',
             ),
           ),
 
@@ -48,7 +48,7 @@ class LoginForm extends StatelessWidget {
             buildWhen: (p, c) => c is TogglePasswordVisibility,
             builder: (context, state) {
               return DefaultTextField(
-                onChanged: (v) {},
+                onChanged: (v) => cubit.password = v,
                 hintText: 'Password...',
                 isHiddenPassword: !cubit.isVisiblePassword,
                 suffix: IconButton(
@@ -68,7 +68,7 @@ class LoginForm extends StatelessWidget {
 
           // login button
           DefaultButton(
-            onPressed: () {},
+            onPressed: () => cubit.login(),
             btnText: 'Sign In',
           ),
 
