@@ -4,10 +4,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/services/service_locator.dart';
 import 'package:todo_app/core/utils/app_router.dart';
 import 'package:todo_app/core/utils/app_themes.dart';
+import 'package:todo_app/core/utils/functions.dart';
 import 'package:todo_app/observer.dart';
 
 void main() async {
@@ -19,6 +21,9 @@ void main() async {
 
     // setup service locator
     await setupServiceLocator();
+
+    // configure easy loading
+    configLoading();
 
     Bloc.observer = MyBlocObserver(); // my bloc observer
 
@@ -44,6 +49,7 @@ class ToDoApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => MaterialApp(
+        builder: EasyLoading.init(),
         debugShowCheckedModeBanner: false,
         title: 'ToDo',
         theme: AppThemes.lightTheme,
