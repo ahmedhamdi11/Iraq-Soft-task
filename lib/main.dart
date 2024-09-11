@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo_app/core/services/navigation_service.dart';
 import 'package:todo_app/core/services/service_locator.dart';
 import 'package:todo_app/core/utils/app_router.dart';
 import 'package:todo_app/core/utils/app_themes.dart';
@@ -54,6 +55,7 @@ class ToDoApp extends StatelessWidget {
         title: 'ToDo',
         theme: AppThemes.lightTheme,
         onGenerateRoute: AppRouter.onGenerateRoute,
+        navigatorKey: sl<NavigationService>().navigatorKey,
       ),
     );
   }

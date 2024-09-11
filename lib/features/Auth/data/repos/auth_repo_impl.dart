@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/core/constants/api_constants.dart';
 import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/failures/failures.dart';
 import 'package:todo_app/core/services/api_services.dart';
+import 'package:todo_app/core/services/service_locator.dart';
 import 'package:todo_app/features/Auth/data/repos/auth_repo.dart';
 
 class AuthRepoImpl implements AuthRepo {
@@ -26,7 +27,15 @@ class AuthRepoImpl implements AuthRepo {
         },
       );
 
-      debugPrint(res.toString());
+      // save the access token and the refresh token
+      sl<SharedPreferences>().setString(
+        kAccessTokenKey,
+        res.data['access_token'],
+      );
+      sl<SharedPreferences>().setString(
+        kAccessTokenKey,
+        res.data['refresh_token'],
+      );
 
       return right(unit);
     } catch (e) {
@@ -59,6 +68,17 @@ class AuthRepoImpl implements AuthRepo {
           'level': level,
         },
       );
+
+      // save the access token and the refresh token
+      sl<SharedPreferences>().setString(
+        kAccessTokenKey,
+        res.data['access_token'],
+      );
+      sl<SharedPreferences>().setString(
+        kAccessTokenKey,
+        res.data['refresh_token'],
+      );
+
       return right(unit);
     } catch (e) {
       if (e is DioException) {

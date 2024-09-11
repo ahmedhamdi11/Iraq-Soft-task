@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:todo_app/core/constants/api_constants.dart';
+import 'package:todo_app/core/services/api_interceptor.dart';
 
 class ApiServices {
   final Dio _dio;
@@ -11,6 +12,8 @@ class ApiServices {
     _dio.options = BaseOptions(
       baseUrl: baseUrl,
     );
+
+    _dio.interceptors.add(ApiInterceptor());
   }
 
   Future<Response> get({

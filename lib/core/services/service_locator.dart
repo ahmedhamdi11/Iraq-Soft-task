@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/core/services/api_services.dart';
+import 'package:todo_app/core/services/navigation_service.dart';
 import 'package:todo_app/features/Auth/data/repos/auth_repo.dart';
 import 'package:todo_app/features/Auth/data/repos/auth_repo_impl.dart';
 
@@ -19,4 +20,7 @@ Future<void> setupServiceLocator() async {
 
   // register the auth repo
   sl.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(sl.get<ApiServices>()));
+
+  // register the navigation service
+  sl.registerLazySingleton<NavigationService>(() => NavigationService());
 }
