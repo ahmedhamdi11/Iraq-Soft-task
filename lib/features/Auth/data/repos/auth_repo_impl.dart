@@ -20,6 +20,10 @@ class AuthRepoImpl implements AuthRepo {
     try {
       Response res = await _apiServices.post(
         endPoint: kLoginEndpoint,
+        data: {
+          'phone': phone,
+          'password': password,
+        },
       );
 
       debugPrint(res.toString());
