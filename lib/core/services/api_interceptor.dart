@@ -10,7 +10,8 @@ import 'package:todo_app/core/utils/app_router.dart';
 class ApiInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    String? accessToken = sl<SharedPreferences>().getString(kAccessTokenKey);
+    String? accessToken =
+        sl<SharedPreferences>().getString(kAccessTokenPrefsKey);
 
     if (accessToken != null) {
       options.headers.addAll({
@@ -38,19 +39,20 @@ class ApiInterceptor extends Interceptor {
   }
 
   Future<bool> _refreshToken() async {
-    String? refreshToken = sl<SharedPreferences>().getString(kRefreshTokenKey);
+    String? refreshToken =
+        sl<SharedPreferences>().getString(kRefreshTokenPrefsKey);
 
     if (refreshToken != null) {
       try {
         Response res = await sl<ApiServices>().get(
           endPoint: kRefreshTokenEndpoint,
           queryParameters: {
-            'token': sl<SharedPreferences>().getString(kRefreshTokenKey),
+            'token': sl<SharedPreferences>().getString(kRefreshTokenPrefsKey),
           },
         );
         if (res.data['access_token'] != null) {
           sl<SharedPreferences>()
-              .setString(kAccessTokenKey, res.data['access_token']);
+              .setString(kAccessTokenPrefsKey, res.data['access_token']);
           return true;
         } else {
           return false;
@@ -64,8 +66,8 @@ class ApiInterceptor extends Interceptor {
   }
 
   Future<void> _deleteSavedDataAndNavigateToLogin() async {
-    await sl<SharedPreferences>().remove(kAccessTokenKey);
-    await sl<SharedPreferences>().remove(kRefreshTokenKey);
+    await sl<SharedPreferences>().remove(kAccessTokenPrefsKey);
+    await sl<SharedPreferences>().remove(kRefreshTokenPrefsKey);
     await sl<NavigationService>().pushNamedAndRemoveUntil(AppRouter.loginView);
   }
 }

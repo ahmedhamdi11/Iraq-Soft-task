@@ -8,18 +8,20 @@ import 'package:todo_app/features/Auth/presentation/controller/sign_up_cubit/sig
 import 'package:todo_app/features/Auth/presentation/views/login_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/sign_up_view.dart';
 import 'package:todo_app/features/Onboarding/presentation/views/onboarding_view.dart';
+import 'package:todo_app/features/home/presentation/views/home_view.dart';
 
 abstract class AppRouter {
   // routes names
   static const onBoardingView = '/onBoardingView';
   static const loginView = '/loginView';
   static const signUpView = '/signUpView';
+  static const homeView = '/homeView';
 
   /// This function is responsible for generating routes based on the route settings.
   static Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       // onboarding view route
-      case '/':
+      case onBoardingView:
         // This route leads to the OnBoardingView
         return CustomPageRouteBuilder(
           page: const OnboardingView(),
@@ -44,6 +46,13 @@ abstract class AppRouter {
             create: (context) => SignUpCubit(sl<AuthRepo>()),
             child: const SignUpView(),
           ),
+        );
+
+      // home view route
+      case homeView:
+        // This route leads to the OnBoardingView
+        return CustomPageRouteBuilder(
+          page: const HomeView(),
         );
 
       default:

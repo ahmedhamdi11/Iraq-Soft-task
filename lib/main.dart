@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/services/navigation_service.dart';
 import 'package:todo_app/core/services/service_locator.dart';
 import 'package:todo_app/core/utils/app_router.dart';
@@ -54,9 +56,23 @@ class ToDoApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'ToDo',
         theme: AppThemes.lightTheme,
+        initialRoute: _initialRoute(),
         onGenerateRoute: AppRouter.onGenerateRoute,
         navigatorKey: sl<NavigationService>().navigatorKey,
       ),
     );
+  }
+
+  String _initialRoute() {
+    String? token = sl<SharedPreferences>().getString(kAccessTokenPrefsKey);
+    bool? onboarding = sl<SharedPreferences>().getBool(kOnBoardingPrefsKey);
+
+    if (token != null) {
+      return AppRouter.homeView;
+    } else if (onboarding == true) {
+      return AppRouter.loginView;
+    } else {
+      return AppRouter.onBoardingView;
+    }
   }
 }

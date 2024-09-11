@@ -1,4 +1,7 @@
 const kHorizontalPadding = 22.0;
 const kUnknownErrorMessage = 'something went wrong, please try again!';
-const kAccessTokenKey = 'access-token';
-const kRefreshTokenKey = 'refresh-token';
+
+// shared prefs keys
+const kOnBoardingPrefsKey = 'onboarding';
+const kAccessTokenPrefsKey = 'access-token';
+const kRefreshTokenPrefsKey = 'refresh-token';

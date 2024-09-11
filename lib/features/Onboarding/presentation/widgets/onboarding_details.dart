@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/core/constants/constants.dart';
+import 'package:todo_app/core/services/service_locator.dart';
 import 'package:todo_app/core/utils/app_router.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/widgets/default_button.dart';
@@ -37,10 +39,7 @@ class OnboardingDetails extends StatelessWidget {
 
           // get started button
           DefaultButton(
-            onPressed: () => Navigator.pushReplacementNamed(
-              context,
-              AppRouter.loginView,
-            ),
+            onPressed: () => _onGetStartedButtonPressed(context),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -62,6 +61,17 @@ class OnboardingDetails extends StatelessWidget {
           SizedBox(height: 74.h),
         ],
       ),
+    );
+  }
+
+  void _onGetStartedButtonPressed(BuildContext context) {
+    // save the onboarding state in the shared prefs
+    sl<SharedPreferences>().setBool(kOnBoardingPrefsKey, true);
+
+    // navigate to the login view
+    Navigator.pushReplacementNamed(
+      context,
+      AppRouter.loginView,
     );
   }
 }
