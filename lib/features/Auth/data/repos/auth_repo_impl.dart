@@ -46,8 +46,26 @@ class AuthRepoImpl implements AuthRepo {
     required String address,
     required String level,
     required int experienceYears,
-  }) {
-    // TODO: implement signUp
-    throw UnimplementedError();
+  }) async {
+    try {
+      Response res = await _apiServices.post(
+        endPoint: kSignUpEndpoint,
+        data: {
+          'phone': phone,
+          'password': password,
+          'displayName': displayName,
+          'experienceYears': experienceYears,
+          'address': address,
+          'level': level,
+        },
+      );
+      return right(unit);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDio(e));
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    }
   }
 }

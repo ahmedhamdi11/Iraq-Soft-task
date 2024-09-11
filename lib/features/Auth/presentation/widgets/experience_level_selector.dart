@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/constants/colors.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/enums.dart';
+import 'package:todo_app/features/Auth/presentation/controller/sign_up_cubit/sign_up_cubit.dart';
 
 class ExperienceLevelSelector extends StatefulWidget {
   const ExperienceLevelSelector({super.key});
@@ -49,6 +51,7 @@ class _ExperienceLevelSelectorState extends State<ExperienceLevelSelector> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: kStrokeColor),
+          color: Colors.white,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -95,7 +98,8 @@ class _ExperienceLevelSelectorState extends State<ExperienceLevelSelector> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.r),
                         ),
-                        value: true,
+                        value: context.read<SignUpCubit>().level ==
+                            experience[index],
                         title: Text(
                           experience[index].name,
                           style: AppStyles.text14.copyWith(
@@ -103,7 +107,7 @@ class _ExperienceLevelSelectorState extends State<ExperienceLevelSelector> {
                           ),
                         ),
                         groupValue: true,
-                        onChanged: (v) {},
+                        onChanged: (v) => _onLevelChanged(index),
                       ),
                     ),
                   ),
@@ -113,5 +117,10 @@ class _ExperienceLevelSelectorState extends State<ExperienceLevelSelector> {
         ),
       ),
     );
+  }
+
+  void _onLevelChanged(int index) {
+    context.read<SignUpCubit>().level = experience[index];
+    setState(() {});
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/constants/colors.dart';
@@ -36,6 +37,7 @@ class LoginForm extends StatelessWidget {
             onChanged: (v) => cubit.phone = v,
             hintText: '123 456-7890',
             keyboardType: TextInputType.number,
+            inputFormatters: [LengthLimitingTextInputFormatter(15)],
             prefix: CustomCountryCodePicker(
               onChanged: (c) => cubit.countryCode = c.dialCode ?? '+20',
             ),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/constants/colors.dart';
 import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/widgets/default_button.dart';
 import 'package:todo_app/core/widgets/default_text_field.dart';
+import 'package:todo_app/features/Auth/presentation/controller/sign_up_cubit/sign_up_cubit.dart';
 import 'package:todo_app/features/Auth/presentation/widgets/country_code_picker.dart';
 import 'package:todo_app/features/Auth/presentation/widgets/experience_level_selector.dart';
 
@@ -13,6 +16,8 @@ class SignUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<SignUpCubit>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding).w,
       child: SingleChildScrollView(
@@ -31,7 +36,7 @@ class SignUpForm extends StatelessWidget {
 
             // name field
             DefaultTextField(
-              onChanged: (v) {},
+              onChanged: (v) => cubit.displayName = v,
               hintText: 'Name...',
             ),
 
@@ -39,11 +44,12 @@ class SignUpForm extends StatelessWidget {
 
             // phone number
             DefaultTextField(
-              onChanged: (v) {},
+              onChanged: (v) => cubit.phone = v,
               hintText: '123 456-7890',
               keyboardType: TextInputType.number,
+              inputFormatters: [LengthLimitingTextInputFormatter(15)],
               prefix: CustomCountryCodePicker(
-                onChanged: (c) {},
+                onChanged: (c) => cubit.countryCode = c.dialCode ?? '+20',
               ),
             ),
 
@@ -51,9 +57,13 @@ class SignUpForm extends StatelessWidget {
 
             // years of experience field
             DefaultTextField(
-              onChanged: (v) {},
+              onChanged: (v) => cubit.experienceYears = int.parse(v),
               hintText: 'Years of experience...',
               keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(2),
+              ],
             ),
 
             SizedBox(height: 15.h),
@@ -65,28 +75,38 @@ class SignUpForm extends StatelessWidget {
 
             // address field
             DefaultTextField(
-              onChanged: (v) {},
+              onChanged: (v) => cubit.address = v,
               hintText: 'Address...',
             ),
 
             SizedBox(height: 15.h),
 
             // password field
-            DefaultTextField(
-              onChanged: (v) {},
-              hintText: 'Password...',
-              isHiddenPassword: true,
-              suffix: Icon(
-                Icons.visibility_outlined,
-                size: 24.r,
-              ),
+            BlocBuilder<SignUpCubit, SignUpState>(
+              buildWhen: (p, c) => c is TogglePasswordVisibility,
+              builder: (context, state) {
+                return DefaultTextField(
+                  onChanged: (v) => cubit.password = v,
+                  hintText: 'Password...',
+                  isHiddenPassword: !cubit.isVisiblePassword,
+                  suffix: IconButton(
+                    onPressed: () => cubit.togglePasswordVisibility(),
+                    icon: Icon(
+                      cubit.isVisiblePassword
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                      size: 24.r,
+                    ),
+                  ),
+                );
+              },
             ),
 
             SizedBox(height: 24.h),
 
             // sign up button
             DefaultButton(
-              onPressed: () {},
+              onPressed: () => cubit.signUp(),
               btnText: 'Sign up',
             ),
 

@@ -79,6 +79,7 @@ class DefaultTextField extends StatelessWidget {
       onFieldSubmitted: onFieldSubmitted,
       onEditingComplete: onEditingComplete,
       onTap: onTap,
+      onTapOutside: onTapOutside ?? (event) => FocusScope.of(context).unfocus(),
 
       // text field decoration
       decoration: InputDecoration(
