@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:todo_app/core/constants/constants.dart';
 
 class Failure {
   final String errMessage;
@@ -31,11 +32,11 @@ class ServerFailure extends Failure {
           return ServerFailure(
               'no internet connection, check your connection and try again!');
         } else {
-          return ServerFailure('something went wrong, please try again!');
+          return ServerFailure(kUnknownErrorMessage);
         }
 
       default:
-        return ServerFailure('something went wrong, please try again!');
+        return ServerFailure(kUnknownErrorMessage);
     }
   }
 
@@ -45,7 +46,7 @@ class ServerFailure extends Failure {
     if (res?.data['message'] != null) {
       return ServerFailure(res!.data['message']);
     } else {
-      return ServerFailure('something went wrong, please try again!');
+      return ServerFailure(kUnknownErrorMessage);
     }
   }
 }
