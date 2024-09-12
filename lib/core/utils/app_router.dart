@@ -8,6 +8,7 @@ import 'package:todo_app/features/Auth/presentation/controller/sign_up_cubit/sig
 import 'package:todo_app/features/Auth/presentation/views/login_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/sign_up_view.dart';
 import 'package:todo_app/features/Onboarding/presentation/views/onboarding_view.dart';
+import 'package:todo_app/features/home/data/repos/home_repo.dart';
 import 'package:todo_app/features/home/presentation/manager/cubits/home_view_cubit/home_view_cubit.dart';
 import 'package:todo_app/features/home/presentation/views/home_view.dart';
 
@@ -54,7 +55,7 @@ abstract class AppRouter {
         // This route leads to the OnBoardingView
         return CustomPageRouteBuilder(
           page: BlocProvider(
-            create: (context) => HomeViewCubit(),
+            create: (context) => HomeViewCubit(sl<HomeRepo>())..getTasks(),
             child: const HomeView(),
           ),
         );
