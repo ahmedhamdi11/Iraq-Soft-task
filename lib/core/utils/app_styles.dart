@@ -8,6 +8,11 @@ abstract class AppStyles {
     color: kSecondaryColor,
     fontWeight: FontWeight.w400,
   );
+  static TextStyle text16 = TextStyle(
+    fontSize: 16.sp,
+    color: kBlackColor,
+    fontWeight: FontWeight.w700,
+  );
   static TextStyle text19 = TextStyle(
     fontSize: 19.sp,
     color: Colors.white,

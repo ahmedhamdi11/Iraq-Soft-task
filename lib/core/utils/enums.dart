@@ -4,3 +4,9 @@ enum ExperienceLevel {
   midLevel,
   senior,
 }
+
+enum TaskStatusType {
+  inProgress,
+  waiting,
+  finished,
+}
