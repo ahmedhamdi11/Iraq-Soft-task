@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/constants/colors.dart';
+import 'package:todo_app/features/home/presentation/widgets/floating_action_buttons.dart';
+import 'package:todo_app/features/home/presentation/widgets/home_view_body.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -9,6 +11,8 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
+      body: const HomeViewBody(),
+      floatingActionButton: const FloatingActionButtons(),
     );
   }
 
