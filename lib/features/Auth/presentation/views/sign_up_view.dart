@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo_app/core/utils/app_router.dart';
 import 'package:todo_app/core/utils/functions.dart';
 import 'package:todo_app/features/Auth/presentation/controller/sign_up_cubit/sign_up_cubit.dart';
 import 'package:todo_app/features/Auth/presentation/widgets/sign_up_form.dart';
@@ -20,7 +21,7 @@ class SignUpView extends StatelessWidget {
         } else if (state is SignUpFailure) {
           _onSignUpFailure(state.errMessage);
         } else if (state is SignUpSuccess) {
-          _onSignUpSuccess();
+          _onSignUpSuccess(context);
         }
       },
       child: Scaffold(
@@ -54,8 +55,14 @@ class SignUpView extends StatelessWidget {
     );
   }
 
-  void _onSignUpSuccess() {
+  void _onSignUpSuccess(BuildContext context) {
     EasyLoading.dismiss();
+    showToastMessage('welcome to tasky!');
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRouter.homeView,
+      (r) => false,
+    );
   }
 
   void _onSignUpFailure(String errMessage) {

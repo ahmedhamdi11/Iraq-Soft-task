@@ -33,7 +33,7 @@ class AuthRepoImpl implements AuthRepo {
         res.data['access_token'],
       );
       sl<SharedPreferences>().setString(
-        kAccessTokenPrefsKey,
+        kRefreshTokenPrefsKey,
         res.data['refresh_token'],
       );
 
@@ -75,7 +75,7 @@ class AuthRepoImpl implements AuthRepo {
         res.data['access_token'],
       );
       sl<SharedPreferences>().setString(
-        kAccessTokenPrefsKey,
+        kRefreshTokenPrefsKey,
         res.data['refresh_token'],
       );
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo_app/core/utils/app_router.dart';
 import 'package:todo_app/core/utils/functions.dart';
 import 'package:todo_app/features/Auth/presentation/controller/login_cubit/login_cubit.dart';
 import 'package:todo_app/features/Auth/presentation/widgets/login_form.dart';
@@ -20,7 +21,7 @@ class LoginView extends StatelessWidget {
         } else if (state is LoginFailure) {
           _onLoginFailure(state.errMessage);
         } else if (state is LoginSuccess) {
-          _onLoginSuccess();
+          _onLoginSuccess(context);
         }
       },
       child: Scaffold(
@@ -46,8 +47,14 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  void _onLoginSuccess() {
+  void _onLoginSuccess(BuildContext context) {
     EasyLoading.dismiss();
+    showToastMessage('Welcome back!');
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRouter.homeView,
+      (r) => false,
+    );
   }
 
   void _onLoginFailure(String errMessage) {

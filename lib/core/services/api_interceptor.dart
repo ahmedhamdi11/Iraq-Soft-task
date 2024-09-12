@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/core/constants/api_constants.dart';
@@ -6,6 +8,7 @@ import 'package:todo_app/core/services/api_services.dart';
 import 'package:todo_app/core/services/navigation_service.dart';
 import 'package:todo_app/core/services/service_locator.dart';
 import 'package:todo_app/core/utils/app_router.dart';
+import 'package:todo_app/core/utils/functions.dart';
 
 class ApiInterceptor extends Interceptor {
   @override
@@ -15,7 +18,7 @@ class ApiInterceptor extends Interceptor {
 
     if (accessToken != null) {
       options.headers.addAll({
-        'Authorization': 'bearer $accessToken',
+        'Authorization': 'Bearer $accessToken',
       });
     }
     super.onRequest(options, handler);
@@ -29,13 +32,34 @@ class ApiInterceptor extends Interceptor {
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
+    log(err.toString());
     if (err.response?.statusCode == 401 &&
         err.response?.data['message'] == 'Unauthorized') {
       if (await _refreshToken()) {
-        handler.resolve(await Dio().fetch(err.requestOptions));
+        handler.resolve(await _retry(err.requestOptions));
       }
     }
     super.onError(err, handler);
+  }
+
+  Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
+    // Create a new RequestOptions object with the same method,
+    // path, data, and query parameters as the original request.
+    final options = Options(
+      method: requestOptions.method,
+      headers: {
+        "Authorization":
+            "Bearer ${sl<SharedPreferences>().getString(kAccessTokenPrefsKey)}",
+      },
+    );
+
+    // Retry the request with the new `RequestOptions` object.
+    return Dio().request(
+      requestOptions.baseUrl + requestOptions.path,
+      data: requestOptions.data,
+      queryParameters: requestOptions.queryParameters,
+      options: options,
+    );
   }
 
   Future<bool> _refreshToken() async {
@@ -55,6 +79,7 @@ class ApiInterceptor extends Interceptor {
               .setString(kAccessTokenPrefsKey, res.data['access_token']);
           return true;
         } else {
+          await _deleteSavedDataAndNavigateToLogin();
           return false;
         }
       } catch (_) {
@@ -62,12 +87,15 @@ class ApiInterceptor extends Interceptor {
         return false;
       }
     }
+    await _deleteSavedDataAndNavigateToLogin();
     return false;
   }
 
   Future<void> _deleteSavedDataAndNavigateToLogin() async {
     await sl<SharedPreferences>().remove(kAccessTokenPrefsKey);
     await sl<SharedPreferences>().remove(kRefreshTokenPrefsKey);
+    showToastMessage('session expired, pleas login again!');
+
     await sl<NavigationService>().pushNamedAndRemoveUntil(AppRouter.loginView);
   }
 }
