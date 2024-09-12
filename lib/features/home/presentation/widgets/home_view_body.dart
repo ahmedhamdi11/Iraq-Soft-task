@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/constants/colors.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/features/home/presentation/widgets/filter_buttons.dart';
+import 'package:todo_app/features/home/presentation/widgets/tasks_listview.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -29,6 +30,11 @@ class HomeViewBody extends StatelessWidget {
 
         // filter buttons
         const FilterButtons(),
+
+        SizedBox(height: 24.h),
+
+        // tasks list
+        const TasksListview(),
       ],
     );
   }

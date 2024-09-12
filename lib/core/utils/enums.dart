@@ -10,3 +10,9 @@ enum TaskStatusType {
   waiting,
   finished,
 }
+
+enum TaskPriorityType {
+  low,
+  medium,
+  heigh,
+}
