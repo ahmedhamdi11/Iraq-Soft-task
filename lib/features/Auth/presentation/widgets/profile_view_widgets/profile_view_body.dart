@@ -4,6 +4,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo_app/core/constants/constants.dart';
+import 'package:todo_app/core/utils/functions.dart';
 import 'package:todo_app/core/widgets/default_error_widget.dart';
 import 'package:todo_app/features/Auth/presentation/controller/profile_cubit/profile_cubit.dart';
 
@@ -43,9 +45,7 @@ class ProfileViewBody extends StatelessWidget {
                   title: 'Phone',
                   content: state.user.phone,
                   suffix: IconButton(
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: state.user.phone));
-                    },
+                    onPressed: () => _copyPhoneNumber(state.user.phone),
                     icon: SvgPicture.asset(
                       'assets/icons/copy_icon.svg',
                       width: 24.r,
@@ -78,5 +78,15 @@ class ProfileViewBody extends StatelessWidget {
         }
       },
     );
+  }
+
+  void _copyPhoneNumber(String phone) {
+    try {
+      Clipboard.setData(ClipboardData(text: phone)).then((_) {
+        showToastMessage('Copied to Clipboard');
+      });
+    } catch (e) {
+      showToastMessage(kUnknownErrorMessage);
+    }
   }
 }
