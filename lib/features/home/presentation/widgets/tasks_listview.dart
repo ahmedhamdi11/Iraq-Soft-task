@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/widgets/default_error_widget.dart';
 import 'package:todo_app/features/home/data/models/task_model.dart';
 import 'package:todo_app/features/home/presentation/manager/cubits/home_view_cubit/home_view_cubit.dart';
+import 'package:todo_app/features/home/presentation/widgets/no_tasks_widget.dart';
 import 'package:todo_app/features/home/presentation/widgets/task_card_widgets/task_card.dart';
 import 'package:todo_app/features/home/presentation/widgets/tasks_loading_shimmer.dart';
 
@@ -65,68 +66,72 @@ class _TasksListviewState extends State<TasksListview> {
     final cubit = context.read<HomeViewCubit>();
 
     return Expanded(
-      child: BlocBuilder<HomeViewCubit, HomeViewState>(
-        buildWhen: (p, c) =>
-            c is GetTasksLoading ||
-            c is GetTasksFailure ||
-            c is GetTasksSuccess,
-        builder: (context, state) {
-          if (state is GetTasksLoading && cubit.tasksPage == 1) {
-            return const TasksLoadingShimmer();
-          } else if (state is GetTasksFailure && cubit.tasksPage == 1) {
-            return Center(
-              child: DefaultErrorWidget(
-                errMessage: state.errMessage,
-                onTryAgainPressed: () => cubit.getTasks(),
-              ),
-            );
-          }
-
-          // else the state is success state
-          // check if there the tasks is empty to display the empty ui else display the tasks list
-          List<TaskModel> filteredTasks = [];
-
-          // TODO: filter the tasks based on it's status
-          // return all data for now
-          if (false) {
-            filteredTasks.addAll(cubit.tasks.where(
-              (e) => e.status == cubit.selectedFilterStatus,
-            ));
-          } else {
-            filteredTasks = cubit.tasks;
-          }
-
-          if (filteredTasks.isEmpty) {
-            return const Center(
-              child: Text('no tasks'),
-            );
-          }
-          return Animate(
-            effects: const [FadeEffect()],
-            child: RefreshIndicator(
-              onRefresh: () => _onRefresh(),
-              child: ListView.builder(
-                itemCount: filteredTasks.length + 1,
-                controller: _scrollController,
-                padding: const EdgeInsets.only(bottom: 130).h,
-                itemBuilder: (context, index) {
-                  if (index < filteredTasks.length) {
-                    return TaskCard(task: filteredTasks[index]);
-                  } else {
-                    return state is GetTasksLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : state is GetTasksFailure
-                            ? DefaultErrorWidget(
-                                errMessage: state.errMessage,
-                                onTryAgainPressed: () => cubit.getTasks(),
-                              )
-                            : const SizedBox.shrink();
+      child: RefreshIndicator(
+        onRefresh: () => _onRefresh(),
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              child: BlocBuilder<HomeViewCubit, HomeViewState>(
+                buildWhen: (p, c) =>
+                    c is GetTasksLoading ||
+                    c is GetTasksFailure ||
+                    c is GetTasksSuccess,
+                builder: (context, state) {
+                  if (state is GetTasksLoading && cubit.tasksPage == 1) {
+                    return const TasksLoadingShimmer();
+                  } else if (state is GetTasksFailure && cubit.tasksPage == 1) {
+                    return Center(
+                      child: DefaultErrorWidget(
+                        errMessage: state.errMessage,
+                        onTryAgainPressed: () => cubit.getTasks(),
+                      ),
+                    );
                   }
+
+                  // else the state is success state
+                  // check if there the tasks is empty to display the empty ui else display the tasks list
+                  List<TaskModel> filteredTasks = [];
+
+                  // TODO: filter the tasks based on it's status
+                  // return all data for now
+                  if (false) {
+                    filteredTasks.addAll(cubit.tasks.where(
+                      (e) => e.status == cubit.selectedFilterStatus,
+                    ));
+                  } else {
+                    filteredTasks = cubit.tasks;
+                  }
+
+                  if (filteredTasks.isEmpty) {
+                    return const NoTasksWidget();
+                  }
+                  return Animate(
+                    effects: const [FadeEffect()],
+                    child: ListView.builder(
+                      itemCount: filteredTasks.length + 1,
+                      controller: _scrollController,
+                      padding: const EdgeInsets.only(bottom: 130).h,
+                      itemBuilder: (context, index) {
+                        if (index < filteredTasks.length) {
+                          return TaskCard(task: filteredTasks[index]);
+                        } else {
+                          return state is GetTasksLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : state is GetTasksFailure
+                                  ? DefaultErrorWidget(
+                                      errMessage: state.errMessage,
+                                      onTryAgainPressed: () => cubit.getTasks(),
+                                    )
+                                  : const SizedBox.shrink();
+                        }
+                      },
+                    ),
+                  );
                 },
               ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
