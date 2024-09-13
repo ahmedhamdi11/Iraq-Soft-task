@@ -31,46 +31,49 @@ class ProfileViewBody extends StatelessWidget {
         } else if (state is ProfileSuccess) {
           return Animate(
             effects: const [FadeEffect()],
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-              children: [
-                // user name
-                ProfileInfoTile(
-                  title: 'Name',
-                  content: state.user.name,
-                ),
+            child: RefreshIndicator(
+              onRefresh: () => _onRefresh(cubit),
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+                children: [
+                  // user name
+                  ProfileInfoTile(
+                    title: 'Name',
+                    content: state.user.name,
+                  ),
 
-                // phone
-                ProfileInfoTile(
-                  title: 'Phone',
-                  content: state.user.phone,
-                  suffix: IconButton(
-                    onPressed: () => _copyPhoneNumber(state.user.phone),
-                    icon: SvgPicture.asset(
-                      'assets/icons/copy_icon.svg',
-                      width: 24.r,
+                  // phone
+                  ProfileInfoTile(
+                    title: 'Phone',
+                    content: state.user.phone,
+                    suffix: IconButton(
+                      onPressed: () => _copyPhoneNumber(state.user.phone),
+                      icon: SvgPicture.asset(
+                        'assets/icons/copy_icon.svg',
+                        width: 24.r,
+                      ),
                     ),
                   ),
-                ),
 
-                // level
-                ProfileInfoTile(
-                  title: 'Level',
-                  content: state.user.level,
-                ),
+                  // level
+                  ProfileInfoTile(
+                    title: 'Level',
+                    content: state.user.level,
+                  ),
 
-                // years of experience
-                ProfileInfoTile(
-                  title: 'Years of experience',
-                  content: state.user.experienceYears.toString(),
-                ),
+                  // years of experience
+                  ProfileInfoTile(
+                    title: 'Years of experience',
+                    content: state.user.experienceYears.toString(),
+                  ),
 
-                // address
-                ProfileInfoTile(
-                  title: 'Location',
-                  content: state.user.address,
-                ),
-              ],
+                  // address
+                  ProfileInfoTile(
+                    title: 'Location',
+                    content: state.user.address,
+                  ),
+                ],
+              ),
             ),
           );
         } else {
@@ -88,5 +91,9 @@ class ProfileViewBody extends StatelessWidget {
     } catch (e) {
       showToastMessage(kUnknownErrorMessage);
     }
+  }
+
+  Future<void> _onRefresh(ProfileCubit cubit) async {
+    await cubit.getUserInfo();
   }
 }
