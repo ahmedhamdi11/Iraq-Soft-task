@@ -34,4 +34,18 @@ class HomeViewCubit extends Cubit<HomeViewState> {
       },
     );
   }
+
+  Future<void> deleteTask(String taskId) async {
+    emit(DeleteTasksLoading());
+
+    var result = await _repo.deleteTask(taskId);
+
+    result.fold(
+      (failure) => emit(DeleteTasksFailure(failure.errMessage)),
+      (successData) {
+        tasks.removeWhere((e) => e.id == taskId);
+        emit(DeleteTasksSuccess(successData));
+      },
+    );
+  }
 }

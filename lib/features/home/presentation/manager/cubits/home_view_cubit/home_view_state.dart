@@ -17,3 +17,18 @@ final class GetTasksFailure extends HomeViewState {
 
   GetTasksFailure(this.errMessage);
 }
+
+/// delete task states
+final class DeleteTasksLoading extends HomeViewState {}
+
+final class DeleteTasksSuccess extends HomeViewState {
+  final String successMessage;
+
+  DeleteTasksSuccess(this.successMessage);
+}
+
+final class DeleteTasksFailure extends HomeViewState {
+  final String errMessage;
+
+  DeleteTasksFailure(this.errMessage);
+}

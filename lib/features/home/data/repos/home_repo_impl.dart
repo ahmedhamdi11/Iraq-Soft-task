@@ -42,7 +42,7 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, String>> deleteTask(int taskId) async {
+  Future<Either<Failure, String>> deleteTask(String taskId) async {
     try {
       Response res = await _apiServices.delete(
         endPoint: '$kTodosListEndpoint/$taskId',
