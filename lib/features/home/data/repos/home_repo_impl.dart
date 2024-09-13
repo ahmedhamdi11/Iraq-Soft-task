@@ -40,4 +40,25 @@ class HomeRepoImpl implements HomeRepo {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, String>> deleteTask(int taskId) async {
+    try {
+      Response res = await _apiServices.delete(
+        endPoint: '$kTodosListEndpoint/$taskId',
+      );
+
+      if (res.statusCode == 200) {
+        return right('Task deleted');
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDio(e));
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    }
+  }
 }
