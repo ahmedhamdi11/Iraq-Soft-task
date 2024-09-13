@@ -8,6 +8,7 @@ import 'package:todo_app/core/widgets/default_error_widget.dart';
 import 'package:todo_app/features/Auth/presentation/controller/profile_cubit/profile_cubit.dart';
 
 import 'package:todo_app/features/Auth/presentation/widgets/profile_view_widgets/profile_info_tile.dart';
+import 'package:todo_app/features/Auth/presentation/widgets/profile_view_widgets/profile_shimmer.dart';
 
 class ProfileViewBody extends StatelessWidget {
   const ProfileViewBody({super.key});
@@ -73,9 +74,7 @@ class ProfileViewBody extends StatelessWidget {
             ),
           );
         } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const ProfileShimmer();
         }
       },
     );
