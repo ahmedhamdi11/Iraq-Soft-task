@@ -1,17 +1,17 @@
-enum ExperienceLevel {
+enum ExperienceLevelEnum {
   fresh,
   junior,
   midLevel,
   senior,
 }
 
-enum TaskStatusType {
+enum TaskStatusEnum {
   inProgress,
   waiting,
   finished,
 }
 
-enum TaskPriorityType {
+enum TaskPriorityEnum {
   low,
   medium,
   heigh,

@@ -6,8 +6,8 @@ class TaskModel {
   final String image;
   final String title;
   final String desc;
-  final TaskPriorityType priority;
-  final TaskStatusType status;
+  final TaskPriorityEnum priority;
+  final TaskStatusEnum status;
   final String userId;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -26,22 +26,22 @@ class TaskModel {
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     // assign the task status
-    TaskStatusType taskStatus = TaskStatusType.waiting;
+    TaskStatusEnum taskStatus = TaskStatusEnum.waiting;
     if (json['status'] != null) {
       if (json['status'] == 'inprogress') {
-        taskStatus = TaskStatusType.inProgress;
+        taskStatus = TaskStatusEnum.inProgress;
       } else if (json['status'] == 'finished') {
-        taskStatus = TaskStatusType.finished;
+        taskStatus = TaskStatusEnum.finished;
       }
     }
 
     // assign the task priority
-    TaskPriorityType taskPriority = TaskPriorityType.low;
+    TaskPriorityEnum taskPriority = TaskPriorityEnum.low;
     if (json['priority'] != null) {
       if (json['priority'] == 'medium') {
-        taskPriority = TaskPriorityType.medium;
+        taskPriority = TaskPriorityEnum.medium;
       } else if (json['priority'] == 'high') {
-        taskPriority = TaskPriorityType.heigh;
+        taskPriority = TaskPriorityEnum.heigh;
       }
     }
 

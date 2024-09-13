@@ -4,6 +4,9 @@ sealed class HomeViewState {}
 
 final class HomeViewInitial extends HomeViewState {}
 
+/// filter state
+final class TasksFilterChanged extends HomeViewState {}
+
 /// get tasks states
 final class GetTasksLoading extends HomeViewState {}
 

@@ -23,7 +23,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   String address = '';
   String displayName = '';
   int? experienceYears;
-  ExperienceLevel? level;
+  ExperienceLevelEnum? level;
 
   bool _validInput() {
     return phone.isNotEmpty &&

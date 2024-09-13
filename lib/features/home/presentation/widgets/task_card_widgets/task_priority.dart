@@ -10,7 +10,7 @@ class TaskPriority extends StatelessWidget {
     required this.priority,
   });
 
-  final TaskPriorityType priority;
+  final TaskPriorityEnum priority;
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +34,11 @@ class TaskPriority extends StatelessWidget {
 
   Color _getColor() {
     switch (priority) {
-      case TaskPriorityType.low:
+      case TaskPriorityEnum.low:
         return kBlueColor;
-      case TaskPriorityType.medium:
+      case TaskPriorityEnum.medium:
         return kPrimaryColor;
-      case TaskPriorityType.heigh:
+      case TaskPriorityEnum.heigh:
         return kOrangeColor;
     }
   }

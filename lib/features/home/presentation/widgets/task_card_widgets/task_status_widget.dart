@@ -10,7 +10,7 @@ class TaskStatusWidget extends StatelessWidget {
     required this.taskStatus,
   });
 
-  final TaskStatusType taskStatus;
+  final TaskStatusEnum taskStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -32,22 +32,22 @@ class TaskStatusWidget extends StatelessWidget {
 
   Color _getColor() {
     switch (taskStatus) {
-      case TaskStatusType.inProgress:
+      case TaskStatusEnum.inProgress:
         return kPrimaryColor;
-      case TaskStatusType.waiting:
+      case TaskStatusEnum.waiting:
         return kOrangeColor;
-      case TaskStatusType.finished:
+      case TaskStatusEnum.finished:
         return kBlueColor;
     }
   }
 
   String _getName() {
     switch (taskStatus) {
-      case TaskStatusType.inProgress:
+      case TaskStatusEnum.inProgress:
         return "InProgress";
-      case TaskStatusType.waiting:
+      case TaskStatusEnum.waiting:
         return "Waiting";
-      case TaskStatusType.finished:
+      case TaskStatusEnum.finished:
         return "Finished";
     }
   }

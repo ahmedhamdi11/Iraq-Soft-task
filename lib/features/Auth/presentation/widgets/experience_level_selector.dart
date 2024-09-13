@@ -18,11 +18,11 @@ class _ExperienceLevelSelectorState extends State<ExperienceLevelSelector> {
   bool _isExpanded = false;
   late final ScrollController _scrollController;
 
-  List<ExperienceLevel> experience = [
-    ExperienceLevel.fresh,
-    ExperienceLevel.junior,
-    ExperienceLevel.midLevel,
-    ExperienceLevel.senior,
+  List<ExperienceLevelEnum> experience = [
+    ExperienceLevelEnum.fresh,
+    ExperienceLevelEnum.junior,
+    ExperienceLevelEnum.midLevel,
+    ExperienceLevelEnum.senior,
   ];
 
   @override
