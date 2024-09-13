@@ -10,9 +10,11 @@ import 'package:todo_app/features/Auth/presentation/views/login_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/profile_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/sign_up_view.dart';
 import 'package:todo_app/features/Onboarding/presentation/views/onboarding_view.dart';
+import 'package:todo_app/features/home/data/models/task_model.dart';
 import 'package:todo_app/features/home/data/repos/home_repo.dart';
 import 'package:todo_app/features/home/presentation/manager/cubits/home_view_cubit/home_view_cubit.dart';
 import 'package:todo_app/features/home/presentation/views/home_view.dart';
+import 'package:todo_app/features/home/presentation/views/task_details_view.dart';
 
 abstract class AppRouter {
   // routes names
@@ -21,6 +23,7 @@ abstract class AppRouter {
   static const signUpView = '/signUpView';
   static const homeView = '/homeView';
   static const profileView = '/profileView';
+  static const taskDetailsView = '/taskDetailsView';
 
   /// This function is responsible for generating routes based on the route settings.
   static Route? onGenerateRoute(RouteSettings settings) {
@@ -65,6 +68,14 @@ abstract class AppRouter {
           page: BlocProvider(
             create: (context) => ProfileCubit(sl<AuthRepo>())..getUserInfo(),
             child: const ProfileView(),
+          ),
+        );
+
+      // task details view route
+      case taskDetailsView:
+        return CustomPageRouteBuilder(
+          page: TaskDetailsView(
+            task: settings.arguments as TaskModel,
           ),
         );
 
