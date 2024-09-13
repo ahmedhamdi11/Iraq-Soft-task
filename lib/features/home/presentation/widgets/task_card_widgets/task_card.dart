@@ -40,20 +40,23 @@ class TaskCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // task image
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12.r),
-                child: CachedNetworkImage(
-                  imageUrl: task.image,
-                  height: 64.h,
-                  width: 64.h,
-                  fit: BoxFit.cover,
-                  errorWidget: (context, url, error) => Image.asset(
-                    'assets/icons/launcher_icon.png',
+              Hero(
+                tag: task.id,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.r),
+                  child: CachedNetworkImage(
+                    imageUrl: task.image,
+                    height: 64.h,
+                    width: 64.h,
                     fit: BoxFit.cover,
-                  ),
-                  placeholder: (context, url) => Image.asset(
-                    'assets/icons/launcher_icon.png',
-                    fit: BoxFit.cover,
+                    errorWidget: (context, url, error) => Image.asset(
+                      'assets/icons/launcher_icon.png',
+                      fit: BoxFit.cover,
+                    ),
+                    placeholder: (context, url) => Image.asset(
+                      'assets/icons/launcher_icon.png',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

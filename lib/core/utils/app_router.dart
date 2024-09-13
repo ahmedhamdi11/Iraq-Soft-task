@@ -74,6 +74,7 @@ abstract class AppRouter {
       // task details view route
       case taskDetailsView:
         return CustomPageRouteBuilder(
+          transitionType: TransitionTypeEnum.fade,
           page: TaskDetailsView(
             task: settings.arguments as TaskModel,
           ),
