@@ -42,6 +42,18 @@ class _TasksListviewState extends State<TasksListview> {
     });
   }
 
+  Future<void> _onRefresh() async {
+    final cubit = context.read<HomeViewCubit>();
+
+    // reset the pagination
+    cubit.tasksPage = 1;
+    cubit.isLastPage = false;
+    cubit.tasks = [];
+
+    // fetch the tasks
+    await cubit.getTasks();
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -54,6 +66,10 @@ class _TasksListviewState extends State<TasksListview> {
 
     return Expanded(
       child: BlocBuilder<HomeViewCubit, HomeViewState>(
+        buildWhen: (p, c) =>
+            c is GetTasksLoading ||
+            c is GetTasksFailure ||
+            c is GetTasksSuccess,
         builder: (context, state) {
           if (state is GetTasksLoading && cubit.tasksPage == 1) {
             return const TasksLoadingShimmer();
@@ -70,9 +86,12 @@ class _TasksListviewState extends State<TasksListview> {
           // check if there the tasks is empty to display the empty ui else display the tasks list
           List<TaskModel> filteredTasks = [];
 
-          if (cubit.selectedFilterStatus != null) {
-            filteredTasks.addAll(cubit.tasks
-                .where((e) => e.status == cubit.selectedFilterStatus));
+          // TODO: filter the tasks based on it's status
+          // return all data for now
+          if (false) {
+            filteredTasks.addAll(cubit.tasks.where(
+              (e) => e.status == cubit.selectedFilterStatus,
+            ));
           } else {
             filteredTasks = cubit.tasks;
           }
@@ -84,24 +103,27 @@ class _TasksListviewState extends State<TasksListview> {
           }
           return Animate(
             effects: const [FadeEffect()],
-            child: ListView.builder(
-              itemCount: filteredTasks.length + 1,
-              controller: _scrollController,
-              padding: const EdgeInsets.only(bottom: 130).h,
-              itemBuilder: (context, index) {
-                if (index < filteredTasks.length) {
-                  return TaskCard(task: filteredTasks[index]);
-                } else {
-                  return state is GetTasksLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : state is GetTasksFailure
-                          ? DefaultErrorWidget(
-                              errMessage: state.errMessage,
-                              onTryAgainPressed: () => cubit.getTasks(),
-                            )
-                          : const SizedBox.shrink();
-                }
-              },
+            child: RefreshIndicator(
+              onRefresh: () => _onRefresh(),
+              child: ListView.builder(
+                itemCount: filteredTasks.length + 1,
+                controller: _scrollController,
+                padding: const EdgeInsets.only(bottom: 130).h,
+                itemBuilder: (context, index) {
+                  if (index < filteredTasks.length) {
+                    return TaskCard(task: filteredTasks[index]);
+                  } else {
+                    return state is GetTasksLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : state is GetTasksFailure
+                            ? DefaultErrorWidget(
+                                errMessage: state.errMessage,
+                                onTryAgainPressed: () => cubit.getTasks(),
+                              )
+                            : const SizedBox.shrink();
+                  }
+                },
+              ),
             ),
           );
         },
