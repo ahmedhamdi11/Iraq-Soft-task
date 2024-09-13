@@ -15,6 +15,7 @@ class DefaultErrorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         const Icon(
           Icons.error_outline,
