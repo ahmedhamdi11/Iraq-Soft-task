@@ -4,6 +4,7 @@ import 'package:todo_app/core/services/service_locator.dart';
 import 'package:todo_app/core/utils/custom_page_route_builder.dart';
 import 'package:todo_app/features/Auth/data/repos/auth_repo.dart';
 import 'package:todo_app/features/Auth/presentation/controller/login_cubit/login_cubit.dart';
+import 'package:todo_app/features/Auth/presentation/controller/profile_cubit/profile_cubit.dart';
 import 'package:todo_app/features/Auth/presentation/controller/sign_up_cubit/sign_up_cubit.dart';
 import 'package:todo_app/features/Auth/presentation/views/login_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/profile_view.dart';
@@ -61,7 +62,10 @@ abstract class AppRouter {
       // profile view route
       case profileView:
         return CustomPageRouteBuilder(
-          page: const ProfileView(),
+          page: BlocProvider(
+            create: (context) => ProfileCubit(sl<AuthRepo>()),
+            child: const ProfileView(),
+          ),
         );
 
       default:
