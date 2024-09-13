@@ -3,6 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/constants/colors.dart';
 
 abstract class AppStyles {
+  static TextStyle text9 = TextStyle(
+    fontSize: 9.sp,
+    fontWeight: FontWeight.w400,
+    color: kSecondaryColor,
+  );
   static TextStyle text12 = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w500,
