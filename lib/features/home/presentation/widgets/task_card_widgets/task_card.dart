@@ -7,6 +7,7 @@ import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/features/home/data/models/task_model.dart';
 import 'package:todo_app/features/home/presentation/widgets/task_card_widgets/task_priority.dart';
 import 'package:todo_app/features/home/presentation/widgets/task_card_widgets/task_status_widget.dart';
+import 'package:todo_app/features/home/presentation/widgets/task_options_menu.dart';
 
 class TaskCard extends StatelessWidget {
   const TaskCard({
@@ -105,14 +106,7 @@ class TaskCard extends StatelessWidget {
           SizedBox(width: 4.w),
 
           // options icon button
-          IconButton(
-            onPressed: () {},
-            iconSize: 24.r,
-            icon: const Icon(
-              Icons.more_vert_rounded,
-              color: kBlackColor,
-            ),
-          )
+          const TaskOptionsMenu(),
         ],
       ),
     );
