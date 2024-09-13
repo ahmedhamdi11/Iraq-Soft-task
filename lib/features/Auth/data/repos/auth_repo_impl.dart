@@ -93,7 +93,7 @@ class AuthRepoImpl implements AuthRepo {
   Future<Either<Failure, Unit>> logout() async {
     try {
       Response res = await _apiServices.post(
-        endPoint: kSignUpEndpoint,
+        endPoint: kLogoutEndpoint,
         data: {
           'token': sl<SharedPreferences>().getString(kRefreshTokenPrefsKey),
         },
