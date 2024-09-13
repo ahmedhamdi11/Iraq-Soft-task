@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/constants/colors.dart';
+import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/features/home/presentation/widgets/task_status_filter_widgets/filter_buttons.dart';
 import 'package:todo_app/features/home/presentation/widgets/tasks_listview.dart';
@@ -16,7 +17,7 @@ class HomeViewBody extends StatelessWidget {
         // title
         Padding(
           padding: EdgeInsetsDirectional.only(
-            start: 22.w,
+            start: kHorizontalPadding.w,
             bottom: 16.h,
             top: 24.h,
           ),

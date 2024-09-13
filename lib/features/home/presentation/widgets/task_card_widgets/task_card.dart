@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/core/constants/colors.dart';
+import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/utils/app_router.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/features/home/data/models/task_model.dart';
@@ -21,7 +22,11 @@ class TaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 22.h),
+      padding: EdgeInsets.only(
+        left: (kHorizontalPadding - 2).w,
+        right: (kHorizontalPadding - 2).w,
+        bottom: 22.h,
+      ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12.r),
         onTap: () => Navigator.pushNamed(

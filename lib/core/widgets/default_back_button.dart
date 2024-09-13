@@ -18,7 +18,7 @@ class DefaultBackButton extends StatelessWidget {
           child: Image.asset(
             'assets/icons/Arrow-Left.png',
             color: kBlackColor,
-            width: 24.w,
+            height: 22.h,
           ),
         ),
       ),

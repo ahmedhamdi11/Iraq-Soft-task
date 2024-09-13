@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/constants/colors.dart';
+import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/services/service_locator.dart';
 import 'package:todo_app/core/utils/app_router.dart';
 import 'package:todo_app/core/utils/functions.dart';
@@ -27,7 +28,7 @@ class HomeView extends StatelessWidget {
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       title: Padding(
-        padding: EdgeInsetsDirectional.only(start: 22.w),
+        padding: EdgeInsetsDirectional.only(start: kHorizontalPadding.w),
         child: const Text('Logo'),
       ),
       titleSpacing: 0,
