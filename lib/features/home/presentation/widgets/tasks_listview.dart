@@ -6,6 +6,7 @@ import 'package:todo_app/core/widgets/default_error_widget.dart';
 import 'package:todo_app/features/home/data/models/task_model.dart';
 import 'package:todo_app/features/home/presentation/manager/cubits/home_view_cubit/home_view_cubit.dart';
 import 'package:todo_app/features/home/presentation/widgets/task_card_widgets/task_card.dart';
+import 'package:todo_app/features/home/presentation/widgets/tasks_loading_shimmer.dart';
 
 class TasksListview extends StatefulWidget {
   const TasksListview({super.key});
@@ -55,9 +56,7 @@ class _TasksListviewState extends State<TasksListview> {
       child: BlocBuilder<HomeViewCubit, HomeViewState>(
         builder: (context, state) {
           if (state is GetTasksLoading && cubit.tasksPage == 1) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const TasksLoadingShimmer();
           } else if (state is GetTasksFailure && cubit.tasksPage == 1) {
             return Center(
               child: DefaultErrorWidget(
