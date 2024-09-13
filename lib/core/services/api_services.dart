@@ -47,4 +47,38 @@ class ApiServices {
     );
     return response;
   }
+
+  Future<Response> delete({
+    required String endPoint,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
+    Object? data,
+  }) async {
+    Response response = await _dio.delete(
+      endPoint,
+      queryParameters: queryParameters,
+      options: Options(
+        headers: headers,
+      ),
+      data: data,
+    );
+    return response;
+  }
+
+  Future<Response> put({
+    required String endPoint,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
+    Object? data,
+  }) async {
+    Response response = await _dio.put(
+      endPoint,
+      queryParameters: queryParameters,
+      options: Options(
+        headers: headers,
+      ),
+      data: data,
+    );
+    return response;
+  }
 }
