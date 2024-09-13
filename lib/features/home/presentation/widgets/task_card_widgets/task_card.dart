@@ -4,9 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/core/constants/colors.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
-import 'package:todo_app/core/utils/enums.dart';
 import 'package:todo_app/features/home/data/models/task_model.dart';
-import 'package:todo_app/features/home/data/models/task_status.dart';
 import 'package:todo_app/features/home/presentation/widgets/task_card_widgets/task_priority.dart';
 import 'package:todo_app/features/home/presentation/widgets/task_card_widgets/task_status_widget.dart';
 
@@ -60,12 +58,7 @@ class TaskCard extends StatelessWidget {
                     SizedBox(width: 8.w),
 
                     // task status
-                    const TaskStatusWidget(
-                      taskStatus: TaskStatusModel(
-                        name: "Waiting",
-                        type: TaskStatusType.waiting,
-                      ),
-                    )
+                    TaskStatusWidget(taskStatus: task.status)
                   ],
                 ),
 

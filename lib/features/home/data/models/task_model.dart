@@ -7,6 +7,7 @@ class TaskModel {
   final String title;
   final String desc;
   final TaskPriorityType priority;
+  final TaskStatusType status;
   final String userId;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -17,12 +18,23 @@ class TaskModel {
     required this.title,
     required this.desc,
     required this.priority,
+    required this.status,
     required this.userId,
     required this.createdAt,
     required this.updatedAt,
   });
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
+    // assign the task status
+    TaskStatusType taskStatus = TaskStatusType.waiting;
+    if (json['status'] != null) {
+      if (json['status'] == 'inprogress') {
+        taskStatus = TaskStatusType.inProgress;
+      } else if (json['status'] == 'finished') {
+        taskStatus = TaskStatusType.finished;
+      }
+    }
+
     // assign the task priority
     TaskPriorityType taskPriority = TaskPriorityType.low;
     if (json['priority'] != null) {
@@ -49,6 +61,7 @@ class TaskModel {
       title: json['title'],
       desc: json['desc'],
       priority: taskPriority,
+      status: taskStatus,
       userId: json['user'],
       createdAt: createdAt,
       updatedAt: updatedAt ?? createdAt,
