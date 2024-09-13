@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/core/constants/colors.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/enums.dart';
+import 'package:todo_app/features/home/data/models/task_model.dart';
 import 'package:todo_app/features/home/data/models/task_status.dart';
 import 'package:todo_app/features/home/presentation/widgets/task_card_widgets/task_priority.dart';
 import 'package:todo_app/features/home/presentation/widgets/task_card_widgets/task_status_widget.dart';
@@ -11,7 +13,10 @@ import 'package:todo_app/features/home/presentation/widgets/task_card_widgets/ta
 class TaskCard extends StatelessWidget {
   const TaskCard({
     super.key,
+    required this.task,
   });
+
+  final TaskModel task;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class TaskCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12.r),
             child: CachedNetworkImage(
-              imageUrl: 'imageUrl',
+              imageUrl: task.image,
               height: 64.h,
               width: 64.h,
               errorWidget: (context, url, error) =>
@@ -39,13 +44,14 @@ class TaskCard extends StatelessWidget {
           // task details (title, desc, priority, status, date)
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     // title
                     Expanded(
                       child: Text(
-                        'Grocery Shopping' * 4,
+                        task.title,
                         style: AppStyles.text16,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -67,7 +73,7 @@ class TaskCard extends StatelessWidget {
 
                 // task desc
                 Text(
-                  'Grocery Shopping' * 4,
+                  task.desc,
                   style: AppStyles.text14.copyWith(
                     color: kBlackColor.withOpacity(0.6),
                   ),
@@ -80,8 +86,8 @@ class TaskCard extends StatelessWidget {
                 Row(
                   children: [
                     // priority
-                    const TaskPriority(
-                      priority: TaskPriorityType.low,
+                    TaskPriority(
+                      priority: task.priority,
                     ),
 
                     // date
@@ -90,7 +96,7 @@ class TaskCard extends StatelessWidget {
                         fit: BoxFit.scaleDown,
                         alignment: AlignmentDirectional.centerEnd,
                         child: Text(
-                          '30/12/2022',
+                          DateFormat.yMd().format(task.createdAt),
                           style: AppStyles.text12.copyWith(
                             color: kBlackColor.withOpacity(0.6),
                           ),

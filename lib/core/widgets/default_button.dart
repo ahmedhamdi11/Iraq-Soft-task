@@ -47,7 +47,12 @@ class DefaultButton extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(btnText, style: AppStyles.text19),
+                  child: Text(
+                    btnText,
+                    style: AppStyles.text19.copyWith(
+                      color: btnTextColor,
+                    ),
+                  ),
                 ),
               ),
         ),
