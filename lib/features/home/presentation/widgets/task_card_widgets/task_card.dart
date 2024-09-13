@@ -106,7 +106,7 @@ class TaskCard extends StatelessWidget {
           SizedBox(width: 4.w),
 
           // options icon button
-          const TaskOptionsMenu(),
+          TaskOptionsMenu(task: task),
         ],
       ),
     );
