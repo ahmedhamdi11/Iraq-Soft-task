@@ -15,4 +15,6 @@ abstract class AuthRepo {
     required String level,
     required int experienceYears,
   });
+
+  Future<Either<Failure, Unit>> logout();
 }

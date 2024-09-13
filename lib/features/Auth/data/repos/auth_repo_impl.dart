@@ -88,4 +88,30 @@ class AuthRepoImpl implements AuthRepo {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> logout() async {
+    try {
+      Response res = await _apiServices.post(
+        endPoint: kSignUpEndpoint,
+        data: {
+          'token': sl<SharedPreferences>().getString(kRefreshTokenPrefsKey),
+        },
+      );
+
+      if (res.data['success']) {
+        await sl<SharedPreferences>().remove(kAccessTokenPrefsKey);
+        await sl<SharedPreferences>().remove(kRefreshTokenEndpoint);
+        return right(unit);
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDio(e));
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    }
+  }
 }
