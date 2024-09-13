@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/widgets/default_error_widget.dart';
@@ -82,24 +83,27 @@ class _TasksListviewState extends State<TasksListview> {
               child: Text('no tasks'),
             );
           }
-          return ListView.builder(
-            itemCount: filteredTasks.length + 1,
-            controller: _scrollController,
-            padding: const EdgeInsets.only(bottom: 130).h,
-            itemBuilder: (context, index) {
-              if (index < filteredTasks.length) {
-                return TaskCard(task: filteredTasks[index]);
-              } else {
-                return state is GetTasksLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : state is GetTasksFailure
-                        ? DefaultErrorWidget(
-                            errMessage: state.errMessage,
-                            onTryAgainPressed: () => cubit.getTasks(),
-                          )
-                        : const SizedBox.shrink();
-              }
-            },
+          return Animate(
+            effects: const [FadeEffect()],
+            child: ListView.builder(
+              itemCount: filteredTasks.length + 1,
+              controller: _scrollController,
+              padding: const EdgeInsets.only(bottom: 130).h,
+              itemBuilder: (context, index) {
+                if (index < filteredTasks.length) {
+                  return TaskCard(task: filteredTasks[index]);
+                } else {
+                  return state is GetTasksLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : state is GetTasksFailure
+                          ? DefaultErrorWidget(
+                              errMessage: state.errMessage,
+                              onTryAgainPressed: () => cubit.getTasks(),
+                            )
+                          : const SizedBox.shrink();
+                }
+              },
+            ),
           );
         },
       ),
