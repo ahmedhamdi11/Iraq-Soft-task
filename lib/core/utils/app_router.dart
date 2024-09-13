@@ -63,7 +63,7 @@ abstract class AppRouter {
       case profileView:
         return CustomPageRouteBuilder(
           page: BlocProvider(
-            create: (context) => ProfileCubit(sl<AuthRepo>()),
+            create: (context) => ProfileCubit(sl<AuthRepo>())..getUserInfo(),
             child: const ProfileView(),
           ),
         );
