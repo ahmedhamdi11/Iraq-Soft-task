@@ -34,7 +34,7 @@ class HomeView extends StatelessWidget {
       actions: [
         // profile button
         IconButton(
-          onPressed: () {},
+          onPressed: () => Navigator.pushNamed(context, AppRouter.profileView),
           iconSize: 24.r,
           icon: Image.asset(
             "assets/icons/person_icon.png",

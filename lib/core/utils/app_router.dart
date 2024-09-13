@@ -6,6 +6,7 @@ import 'package:todo_app/features/Auth/data/repos/auth_repo.dart';
 import 'package:todo_app/features/Auth/presentation/controller/login_cubit/login_cubit.dart';
 import 'package:todo_app/features/Auth/presentation/controller/sign_up_cubit/sign_up_cubit.dart';
 import 'package:todo_app/features/Auth/presentation/views/login_view.dart';
+import 'package:todo_app/features/Auth/presentation/views/profile_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/sign_up_view.dart';
 import 'package:todo_app/features/Onboarding/presentation/views/onboarding_view.dart';
 import 'package:todo_app/features/home/data/repos/home_repo.dart';
@@ -18,20 +19,19 @@ abstract class AppRouter {
   static const loginView = '/loginView';
   static const signUpView = '/signUpView';
   static const homeView = '/homeView';
+  static const profileView = '/profileView';
 
   /// This function is responsible for generating routes based on the route settings.
   static Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       // onboarding view route
       case onBoardingView:
-        // This route leads to the OnBoardingView
         return CustomPageRouteBuilder(
           page: const OnboardingView(),
         );
 
       // login view route
       case loginView:
-        // This route leads to the OnBoardingView
         return CustomPageRouteBuilder(
           page: BlocProvider(
             create: (context) => LoginCubit(sl<AuthRepo>()),
@@ -41,7 +41,6 @@ abstract class AppRouter {
 
       // sign up view route
       case signUpView:
-        // This route leads to the OnBoardingView
         return CustomPageRouteBuilder(
           transitionType: TransitionTypeEnum.bottomToTop,
           page: BlocProvider(
@@ -52,12 +51,17 @@ abstract class AppRouter {
 
       // home view route
       case homeView:
-        // This route leads to the OnBoardingView
         return CustomPageRouteBuilder(
           page: BlocProvider(
             create: (context) => HomeViewCubit(sl<HomeRepo>())..getTasks(),
             child: const HomeView(),
           ),
+        );
+
+      // profile view route
+      case profileView:
+        return CustomPageRouteBuilder(
+          page: const ProfileView(),
         );
 
       default:
