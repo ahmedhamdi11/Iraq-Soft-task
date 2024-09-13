@@ -6,6 +6,7 @@ import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/failures/failures.dart';
 import 'package:todo_app/core/services/api_services.dart';
 import 'package:todo_app/core/services/service_locator.dart';
+import 'package:todo_app/features/Auth/data/models/user_model.dart';
 import 'package:todo_app/features/Auth/data/repos/auth_repo.dart';
 
 class AuthRepoImpl implements AuthRepo {
@@ -103,6 +104,27 @@ class AuthRepoImpl implements AuthRepo {
         await sl<SharedPreferences>().remove(kAccessTokenPrefsKey);
         await sl<SharedPreferences>().remove(kRefreshTokenEndpoint);
         return right(unit);
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDio(e));
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> getProfileInfo() async {
+    try {
+      Response res = await _apiServices.get(
+        endPoint: kProfileEndpoint,
+      );
+
+      if (res.statusCode == 200) {
+        return right(UserModel.fromJson(res.data));
       } else {
         return left(Failure(kUnknownErrorMessage));
       }

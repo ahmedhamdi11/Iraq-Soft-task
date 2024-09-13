@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:todo_app/core/failures/failures.dart';
+import 'package:todo_app/features/Auth/data/models/user_model.dart';
 
 abstract class AuthRepo {
   Future<Either<Failure, Unit>> login({
@@ -17,4 +18,6 @@ abstract class AuthRepo {
   });
 
   Future<Either<Failure, Unit>> logout();
+
+  Future<Either<Failure, UserModel>> getProfileInfo();
 }
