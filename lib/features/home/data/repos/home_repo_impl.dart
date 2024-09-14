@@ -61,4 +61,25 @@ class HomeRepoImpl implements HomeRepo {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, TaskModel>> getTaskById(String taskId) async {
+    try {
+      Response res = await _apiServices.get(
+        endPoint: '$kTodosListEndpoint/$taskId',
+      );
+
+      if (res.statusCode == 200) {
+        return right(TaskModel.fromJson(res.data));
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDio(e));
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    }
+  }
 }

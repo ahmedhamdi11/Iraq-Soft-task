@@ -48,4 +48,17 @@ class HomeViewCubit extends Cubit<HomeViewState> {
       },
     );
   }
+
+  Future<void> getTaskById(String taskId) async {
+    emit(GetTaskFromQrLoading());
+
+    var result = await _repo.getTaskById(taskId);
+
+    result.fold(
+      (failure) => emit(GetTaskFromQrFailure(failure.errMessage)),
+      (successData) {
+        emit(GetTaskFromQrSuccess(successData));
+      },
+    );
+  }
 }

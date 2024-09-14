@@ -14,6 +14,7 @@ import 'package:todo_app/features/home/data/models/task_model.dart';
 import 'package:todo_app/features/home/data/repos/home_repo.dart';
 import 'package:todo_app/features/home/presentation/manager/cubits/home_view_cubit/home_view_cubit.dart';
 import 'package:todo_app/features/home/presentation/views/home_view.dart';
+import 'package:todo_app/features/home/presentation/views/sanner_view.dart';
 import 'package:todo_app/features/home/presentation/views/task_details_view.dart';
 
 abstract class AppRouter {
@@ -24,6 +25,7 @@ abstract class AppRouter {
   static const homeView = '/homeView';
   static const profileView = '/profileView';
   static const taskDetailsView = '/taskDetailsView';
+  static const scannerView = '/scannerView';
 
   /// This function is responsible for generating routes based on the route settings.
   static Route? onGenerateRoute(RouteSettings settings) {
@@ -77,6 +79,15 @@ abstract class AppRouter {
           transitionType: TransitionTypeEnum.fade,
           page: TaskDetailsView(
             task: settings.arguments as TaskModel,
+          ),
+        );
+
+      // scanner view route
+      case scannerView:
+        return CustomPageRouteBuilder(
+          page: BlocProvider(
+            create: (context) => HomeViewCubit(sl<HomeRepo>()),
+            child: const ScannerView(),
           ),
         );
 

@@ -32,3 +32,18 @@ final class DeleteTasksFailure extends HomeViewState {
 
   DeleteTasksFailure(this.errMessage);
 }
+
+/// get task from qr cod states
+final class GetTaskFromQrLoading extends HomeViewState {}
+
+final class GetTaskFromQrSuccess extends HomeViewState {
+  final TaskModel task;
+
+  GetTaskFromQrSuccess(this.task);
+}
+
+final class GetTaskFromQrFailure extends HomeViewState {
+  final String errMessage;
+
+  GetTaskFromQrFailure(this.errMessage);
+}
