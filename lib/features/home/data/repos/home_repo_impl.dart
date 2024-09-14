@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:todo_app/core/constants/api_constants.dart';
 import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/failures/failures.dart';
@@ -74,6 +77,51 @@ class HomeRepoImpl implements HomeRepo {
       } else {
         return left(Failure(kUnknownErrorMessage));
       }
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDio(e));
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadImage(ImageSource source) async {
+    try {
+      /// pick the image from the image source
+      final ImagePicker picker = ImagePicker();
+
+      XFile? xFile = await picker.pickImage(source: source);
+
+      if (xFile != null) {
+        // convert the xfile to file
+        File imageFile = File(xFile.path);
+
+        /// if image selected start uploading the image
+        FormData formData = FormData.fromMap({
+          'image': await MultipartFile.fromFile(
+            imageFile.path,
+            filename: imageFile.path.split('/').last,
+          ),
+        });
+
+        Response response = await _apiServices.post(
+          endPoint: kUploadImageEndpoint,
+          data: formData,
+        );
+
+        if (response.statusCode == 201 && response.data['image'] != null) {
+          return right(response.data['image']);
+        } else {
+          return left(Failure(kUnknownErrorMessage));
+        }
+      } else {
+        // if the xfile is null then there is no image selected
+        return left(Failure("NO Image selected"));
+      }
+
+      // catch the error if exist
     } catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDio(e));
