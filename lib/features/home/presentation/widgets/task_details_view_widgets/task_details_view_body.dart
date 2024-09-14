@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:todo_app/core/constants/colors.dart';
 import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
@@ -72,6 +73,16 @@ class TaskDetailsViewBody extends StatelessWidget {
 
         // task priority
         TaskPriorityTile(priority: task.priority),
+
+        SizedBox(height: 16.h),
+
+        // qr code
+        QrImageView(
+          data: task.id,
+          version: QrVersions.auto,
+          padding: const EdgeInsets.all(18),
+          size: 320.h,
+        ),
       ],
     );
   }
