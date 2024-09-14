@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:todo_app/core/constants/api_constants.dart';
 import 'package:todo_app/core/constants/colors.dart';
 import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
@@ -29,7 +30,7 @@ class TaskDetailsViewBody extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12.r),
             child: CachedNetworkImage(
-              imageUrl: task.image,
+              imageUrl: "$kImagesBaseUrl${task.image}",
               height: 225.h,
               fit: BoxFit.contain,
               errorWidget: (context, url, error) => Image.asset(

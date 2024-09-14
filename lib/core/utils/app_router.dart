@@ -10,9 +10,10 @@ import 'package:todo_app/features/Auth/presentation/views/login_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/profile_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/sign_up_view.dart';
 import 'package:todo_app/features/Onboarding/presentation/views/onboarding_view.dart';
+import 'package:todo_app/features/home/data/models/task_model.dart';
 import 'package:todo_app/features/home/data/repos/home_repo.dart';
 import 'package:todo_app/features/home/presentation/manager/cubits/create_task_cubit/create_task_cubit.dart';
-import 'package:todo_app/features/home/presentation/views/add_task_view.dart';
+import 'package:todo_app/features/home/presentation/views/create_edit_task_view.dart';
 import 'package:todo_app/features/home/presentation/views/home_view.dart';
 import 'package:todo_app/features/home/presentation/views/sanner_view.dart';
 import 'package:todo_app/features/home/presentation/views/task_details_view.dart';
@@ -26,7 +27,7 @@ abstract class AppRouter {
   static const profileView = '/profileView';
   static const taskDetailsView = '/taskDetailsView';
   static const scannerView = '/scannerView';
-  static const addTaskView = '/addTaskView';
+  static const createEditTaskView = '/createEditTaskView';
 
   /// This function is responsible for generating routes based on the route settings.
   static Route? onGenerateRoute(RouteSettings settings) {
@@ -89,11 +90,13 @@ abstract class AppRouter {
         );
 
       // add task view route
-      case addTaskView:
+      case createEditTaskView:
         return CustomPageRouteBuilder(
           page: BlocProvider(
-            create: (context) => CreateTaskCubit(sl<HomeRepo>()),
-            child: const AddTaskView(),
+            create: (context) => CreateOrEditTaskCubit(sl<HomeRepo>()),
+            child: CreateEditTaskView(
+              task: settings.arguments as TaskModel?,
+            ),
           ),
         );
 

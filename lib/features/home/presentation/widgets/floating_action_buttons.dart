@@ -44,7 +44,7 @@ class FloatingActionButtons extends StatelessWidget {
             child: FloatingActionButton(
               onPressed: () => Navigator.pushNamed(
                 context,
-                AppRouter.addTaskView,
+                AppRouter.createEditTaskView,
               ),
               heroTag: 'add',
               shape: const CircleBorder(),

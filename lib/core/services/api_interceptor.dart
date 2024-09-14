@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/core/constants/api_constants.dart';
@@ -35,6 +37,7 @@ class ApiInterceptor extends Interceptor {
       if (await _refreshToken()) {
         handler.resolve(await _retry(err.requestOptions));
       }
+      return;
     }
     super.onError(err, handler);
   }

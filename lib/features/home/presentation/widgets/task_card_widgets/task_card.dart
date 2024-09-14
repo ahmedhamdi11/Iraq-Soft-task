@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/core/constants/api_constants.dart';
 import 'package:todo_app/core/constants/colors.dart';
 import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/utils/app_router.dart';
@@ -45,7 +46,7 @@ class TaskCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.r),
                   child: CachedNetworkImage(
-                    imageUrl: task.image,
+                    imageUrl: "$kImagesBaseUrl${task.image}",
                     height: 64.h,
                     width: 64.h,
                     fit: BoxFit.cover,
@@ -74,6 +75,7 @@ class TaskCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             task.title,
+                            maxLines: 1,
                             style: AppStyles.text16,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -91,6 +93,7 @@ class TaskCard extends StatelessWidget {
                     // task desc
                     Text(
                       task.desc,
+                      maxLines: 1,
                       style: AppStyles.text14.copyWith(
                         color: kBlackColor.withOpacity(0.6),
                       ),

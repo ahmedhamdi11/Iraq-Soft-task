@@ -16,7 +16,7 @@ class StatusSelector extends StatefulWidget {
 class _StatusSelectorState extends State<StatusSelector> {
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CreateTaskCubit>();
+    final cubit = context.read<CreateOrEditTaskCubit>();
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(12.r),

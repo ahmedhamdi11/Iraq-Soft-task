@@ -14,9 +14,9 @@ class UploadImageBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CreateTaskCubit>();
+    final cubit = context.read<CreateOrEditTaskCubit>();
 
-    return BlocListener<CreateTaskCubit, CreateTaskState>(
+    return BlocListener<CreateOrEditTaskCubit, CreateOrEditTaskState>(
       listener: (context, state) {
         if (state is UploadImageLoading) {
           EasyLoading.show();

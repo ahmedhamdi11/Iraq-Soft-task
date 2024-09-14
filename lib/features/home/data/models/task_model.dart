@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:todo_app/core/constants/api_constants.dart';
 import 'package:todo_app/core/utils/enums.dart';
 
 class TaskModel {
@@ -58,7 +56,7 @@ class TaskModel {
 
     return TaskModel(
       id: json['_id'],
-      image: json['image'] != null ? "$kImagesBaseUrl${json['image']}" : '',
+      image: json['image'] ?? '',
       title: json['title'],
       desc: json['desc'],
       priority: taskPriority,

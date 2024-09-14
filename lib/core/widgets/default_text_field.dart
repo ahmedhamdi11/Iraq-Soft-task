@@ -59,7 +59,7 @@ class DefaultTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50.h,
+      height: maxLines > 1 ? null : 50.h,
       child: TextFormField(
         obscureText: isHiddenPassword,
         validator: validator,

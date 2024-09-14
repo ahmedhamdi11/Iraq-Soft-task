@@ -8,7 +8,7 @@ import 'package:todo_app/core/constants/colors.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 
 import 'package:todo_app/features/home/presentation/manager/cubits/create_task_cubit/create_task_cubit.dart';
-import 'package:todo_app/features/home/presentation/widgets/add_task_view_widgets/upload_image_bottom_sheet.dart';
+import 'package:todo_app/features/home/presentation/widgets/create_edit_task_widgets/upload_image_bottom_sheet.dart';
 
 class ImageSection extends StatelessWidget {
   const ImageSection({
@@ -17,9 +17,9 @@ class ImageSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CreateTaskCubit>();
+    final cubit = context.read<CreateOrEditTaskCubit>();
 
-    return BlocBuilder<CreateTaskCubit, CreateTaskState>(
+    return BlocBuilder<CreateOrEditTaskCubit, CreateOrEditTaskState>(
       buildWhen: (previous, current) => current is UploadImageSuccess,
       builder: (context, state) {
         return InkWell(
@@ -77,7 +77,7 @@ class ImageSection extends StatelessWidget {
   }
 
   _uploadImage(BuildContext context) {
-    final cubit = context.read<CreateTaskCubit>();
+    final cubit = context.read<CreateOrEditTaskCubit>();
 
     showModalBottomSheet(
       context: context,

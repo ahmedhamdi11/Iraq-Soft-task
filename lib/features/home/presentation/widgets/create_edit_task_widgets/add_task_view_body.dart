@@ -6,17 +6,20 @@ import 'package:todo_app/core/constants/constants.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/widgets/default_button.dart';
 import 'package:todo_app/core/widgets/default_text_field.dart';
+import 'package:todo_app/features/home/data/models/task_model.dart';
 import 'package:todo_app/features/home/presentation/manager/cubits/create_task_cubit/create_task_cubit.dart';
-import 'package:todo_app/features/home/presentation/widgets/add_task_view_widgets/image_section.dart';
-import 'package:todo_app/features/home/presentation/widgets/add_task_view_widgets/priority_selector.dart';
-import 'package:todo_app/features/home/presentation/widgets/add_task_view_widgets/task_status_selector.dart';
+import 'package:todo_app/features/home/presentation/widgets/create_edit_task_widgets/image_section.dart';
+import 'package:todo_app/features/home/presentation/widgets/create_edit_task_widgets/priority_selector.dart';
+import 'package:todo_app/features/home/presentation/widgets/create_edit_task_widgets/task_status_selector.dart';
 
-class AddTaskViewBody extends StatelessWidget {
-  const AddTaskViewBody({super.key});
+class CreateEditTaskViewBody extends StatelessWidget {
+  const CreateEditTaskViewBody({super.key, this.task});
+
+  final TaskModel? task;
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CreateTaskCubit>();
+    final cubit = context.read<CreateOrEditTaskCubit>();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding).w,
@@ -43,6 +46,7 @@ class AddTaskViewBody extends StatelessWidget {
                   SizedBox(height: 8.h),
                   DefaultTextField(
                     hintText: 'Enter title here...',
+                    initialValue: cubit.title,
                     onChanged: (v) => cubit.title = v,
                   ),
 
@@ -59,6 +63,7 @@ class AddTaskViewBody extends StatelessWidget {
                   DefaultTextField(
                     hintText: 'Enter description here...',
                     maxLines: 5,
+                    initialValue: cubit.desc,
                     onChanged: (v) => cubit.desc = v,
                   ),
 
@@ -93,8 +98,14 @@ class AddTaskViewBody extends StatelessWidget {
 
             // button
             DefaultButton(
-              onPressed: () => cubit.createTask(),
-              btnText: 'Add task',
+              onPressed: () {
+                if (task != null) {
+                  cubit.editTask(task!);
+                } else {
+                  cubit.createTask();
+                }
+              },
+              btnText: task != null ? "Edit" : 'Add task',
             ),
 
             SizedBox(height: 35.h),

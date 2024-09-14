@@ -1,31 +1,31 @@
 part of 'create_task_cubit.dart';
 
-sealed class CreateTaskState {}
+sealed class CreateOrEditTaskState {}
 
-final class CreateTaskInitial extends CreateTaskState {}
+final class CreateOrEditTaskInitial extends CreateOrEditTaskState {}
 
 /// upload image states
-final class UploadImageLoading extends CreateTaskState {}
+final class UploadImageLoading extends CreateOrEditTaskState {}
 
-final class UploadImageSuccess extends CreateTaskState {
+final class UploadImageSuccess extends CreateOrEditTaskState {
   final String imagePath;
 
   UploadImageSuccess(this.imagePath);
 }
 
-final class UploadImageFailure extends CreateTaskState {
+final class UploadImageFailure extends CreateOrEditTaskState {
   final String errMessage;
 
   UploadImageFailure(this.errMessage);
 }
 
-/// create task states
-final class CreateTaskLoading extends CreateTaskState {}
+/// create or edit task states
+final class CreateOrEditTaskLoading extends CreateOrEditTaskState {}
 
-final class CreateTaskSuccess extends CreateTaskState {}
+final class CreateOrEditTaskSuccess extends CreateOrEditTaskState {}
 
-final class CreateTaskFailure extends CreateTaskState {
+final class CreateOrEditTaskFailure extends CreateOrEditTaskState {
   final String errMessage;
 
-  CreateTaskFailure(this.errMessage);
+  CreateOrEditTaskFailure(this.errMessage);
 }

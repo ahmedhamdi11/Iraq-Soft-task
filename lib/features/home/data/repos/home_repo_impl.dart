@@ -165,4 +165,32 @@ class HomeRepoImpl implements HomeRepo {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> editTask({required TaskModel task}) async {
+    try {
+      Response res = await _apiServices.put(
+        endPoint: '$kTodosListEndpoint/${task.id}',
+        data: {
+          'image': task.image,
+          'title': task.title,
+          'desc': task.desc,
+          'priority': task.priority.name,
+          'status': task.status.name,
+        },
+      );
+
+      if (res.statusCode == 200) {
+        return right(unit);
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDio(e));
+      } else {
+        return left(Failure(kUnknownErrorMessage));
+      }
+    }
+  }
 }

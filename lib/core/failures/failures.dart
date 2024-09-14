@@ -43,9 +43,13 @@ class ServerFailure extends Failure {
   factory ServerFailure.fromResponse(
     Response? res,
   ) {
-    if (res?.data['message'] != null) {
-      return ServerFailure(res!.data['message']);
-    } else {
+    try {
+      if (res?.data['message'] != null) {
+        return ServerFailure(res!.data['message']);
+      } else {
+        return ServerFailure(kUnknownErrorMessage);
+      }
+    } catch (e) {
       return ServerFailure(kUnknownErrorMessage);
     }
   }

@@ -19,4 +19,6 @@ abstract class HomeRepo {
     required String priority,
     required String status,
   });
+
+  Future<Either<Failure, Unit>> editTask({required TaskModel task});
 }

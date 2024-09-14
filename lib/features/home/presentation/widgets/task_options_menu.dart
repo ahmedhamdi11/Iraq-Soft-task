@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/core/constants/colors.dart';
+import 'package:todo_app/core/utils/app_router.dart';
 import 'package:todo_app/core/utils/app_styles.dart';
 import 'package:todo_app/core/utils/functions.dart';
 import 'package:todo_app/core/widgets/confirm_alert_dialog.dart';
@@ -39,7 +40,7 @@ class TaskOptionsMenu extends StatelessWidget {
       itemBuilder: (context) => [
         // edit
         PopupMenuItem(
-          onTap: () {},
+          onTap: () => _openEditTask(context),
           labelTextStyle: WidgetStatePropertyAll(
             AppStyles.text16.copyWith(
               color: kBlackColor,
@@ -105,5 +106,21 @@ class TaskOptionsMenu extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _openEditTask(BuildContext context) {
+    if (inDetailsView) {
+      Navigator.pushReplacementNamed(
+        context,
+        AppRouter.createEditTaskView,
+        arguments: task,
+      );
+    } else {
+      Navigator.pushNamed(
+        context,
+        AppRouter.createEditTaskView,
+        arguments: task,
+      );
+    }
   }
 }
