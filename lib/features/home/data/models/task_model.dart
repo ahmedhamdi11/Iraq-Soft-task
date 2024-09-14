@@ -57,7 +57,9 @@ class TaskModel {
 
     return TaskModel(
       id: json['_id'],
-      image: json['image'],
+      image: json['image'] != null
+          ? "https://todo.iraqsapp.com/images/${json['image']}"
+          : '',
       title: json['title'],
       desc: json['desc'],
       priority: taskPriority,
