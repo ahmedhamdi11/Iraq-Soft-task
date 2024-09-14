@@ -42,7 +42,10 @@ class FloatingActionButtons extends StatelessWidget {
           width: 64.r,
           child: FittedBox(
             child: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(
+                context,
+                AppRouter.addTaskView,
+              ),
               heroTag: 'add',
               shape: const CircleBorder(),
               backgroundColor: kPrimaryColor,

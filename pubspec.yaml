@@ -52,6 +52,7 @@ dependencies:
   skeletonizer: ^1.4.2
   qr_flutter: ^4.1.0
   mobile_scanner: ^5.2.3
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_native_splash: ^2.4.1

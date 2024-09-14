@@ -13,6 +13,7 @@ import 'package:todo_app/features/Onboarding/presentation/views/onboarding_view.
 import 'package:todo_app/features/home/data/models/task_model.dart';
 import 'package:todo_app/features/home/data/repos/home_repo.dart';
 import 'package:todo_app/features/home/presentation/manager/cubits/home_view_cubit/home_view_cubit.dart';
+import 'package:todo_app/features/home/presentation/views/add_task_view.dart';
 import 'package:todo_app/features/home/presentation/views/home_view.dart';
 import 'package:todo_app/features/home/presentation/views/sanner_view.dart';
 import 'package:todo_app/features/home/presentation/views/task_details_view.dart';
@@ -26,6 +27,7 @@ abstract class AppRouter {
   static const profileView = '/profileView';
   static const taskDetailsView = '/taskDetailsView';
   static const scannerView = '/scannerView';
+  static const addTaskView = '/addTaskView';
 
   /// This function is responsible for generating routes based on the route settings.
   static Route? onGenerateRoute(RouteSettings settings) {
@@ -89,6 +91,12 @@ abstract class AppRouter {
             create: (context) => HomeViewCubit(sl<HomeRepo>()),
             child: const ScannerView(),
           ),
+        );
+
+      // add task view route
+      case addTaskView:
+        return CustomPageRouteBuilder(
+          page: const AddTaskView(),
         );
 
       default:
