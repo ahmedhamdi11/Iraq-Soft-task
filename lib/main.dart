@@ -54,7 +54,7 @@ class ToDoApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) => BlocProvider(
-        create: (context) => HomeViewCubit(sl<HomeRepo>())..getTasks(),
+        create: (context) => HomeViewCubit(sl<HomeRepo>()),
         child: MaterialApp(
           builder: EasyLoading.init(),
           debugShowCheckedModeBanner: false,

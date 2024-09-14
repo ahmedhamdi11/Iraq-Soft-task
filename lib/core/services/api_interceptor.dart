@@ -35,8 +35,6 @@ class ApiInterceptor extends Interceptor {
       if (await _refreshToken()) {
         handler.resolve(await _retry(err.requestOptions));
       }
-
-      return;
     }
     super.onError(err, handler);
   }

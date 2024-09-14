@@ -31,7 +31,7 @@ class TaskDetailsViewBody extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: task.image,
               height: 225.h,
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
               errorWidget: (context, url, error) => Image.asset(
                 'assets/icons/launcher_icon.png',
                 fit: BoxFit.cover,

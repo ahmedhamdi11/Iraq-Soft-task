@@ -103,6 +103,7 @@ class HomeRepoImpl implements HomeRepo {
           'image': await MultipartFile.fromFile(
             imageFile.path,
             filename: imageFile.path.split('/').last,
+            contentType: DioMediaType('image', 'jpeg'),
           ),
         });
 

@@ -25,7 +25,7 @@ class AddTaskViewBody extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // task image
-                  ImageSection(),
+                  const ImageSection(),
 
                   SizedBox(height: 16.h),
 

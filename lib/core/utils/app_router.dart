@@ -10,6 +10,8 @@ import 'package:todo_app/features/Auth/presentation/views/login_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/profile_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/sign_up_view.dart';
 import 'package:todo_app/features/Onboarding/presentation/views/onboarding_view.dart';
+import 'package:todo_app/features/home/data/repos/home_repo.dart';
+import 'package:todo_app/features/home/presentation/manager/cubits/create_task_cubit/create_task_cubit.dart';
 import 'package:todo_app/features/home/presentation/views/add_task_view.dart';
 import 'package:todo_app/features/home/presentation/views/home_view.dart';
 import 'package:todo_app/features/home/presentation/views/sanner_view.dart';
@@ -89,7 +91,10 @@ abstract class AppRouter {
       // add task view route
       case addTaskView:
         return CustomPageRouteBuilder(
-          page: const AddTaskView(),
+          page: BlocProvider(
+            create: (context) => CreateTaskCubit(sl<HomeRepo>()),
+            child: const AddTaskView(),
+          ),
         );
 
       default:
