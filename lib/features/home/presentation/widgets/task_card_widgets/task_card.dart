@@ -32,7 +32,7 @@ class TaskCard extends StatelessWidget {
         onTap: () => Navigator.pushNamed(
           context,
           AppRouter.taskDetailsView,
-          arguments: task,
+          arguments: {'task': task},
         ),
         child: Padding(
           padding: const EdgeInsets.all(2.0).w,

@@ -10,9 +10,11 @@ class TaskDetailsView extends StatelessWidget {
   const TaskDetailsView({
     super.key,
     required this.task,
+    this.showOptions = true,
   });
 
   final TaskModel task;
+  final bool showOptions;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,14 @@ class TaskDetailsView extends StatelessWidget {
     return AppBar(
       leadingWidth: 65.w,
       leading: const DefaultBackButton(),
-      actions: [TaskOptionsMenu(task: task), SizedBox(width: 12.w)],
+      actions: [
+        if (showOptions)
+          TaskOptionsMenu(
+            task: task,
+            inDetailsView: true,
+          ),
+        if (showOptions) SizedBox(width: 12.w)
+      ],
       title: Text(
         'Task Details',
         style: AppStyles.text16,

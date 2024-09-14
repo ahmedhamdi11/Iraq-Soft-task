@@ -13,9 +13,11 @@ class TaskOptionsMenu extends StatelessWidget {
   const TaskOptionsMenu({
     super.key,
     required this.task,
+    this.inDetailsView = false,
   });
 
   final TaskModel task;
+  final bool inDetailsView;
 
   @override
   Widget build(BuildContext context) {
@@ -77,34 +79,29 @@ class TaskOptionsMenu extends StatelessWidget {
     BuildContext context, {
     required String taskId,
   }) {
-    final cubit = context.read<HomeViewCubit>();
-
     showDialog(
       context: context,
-      builder: (context) => BlocProvider.value(
-        value: cubit,
-        child: BlocListener<HomeViewCubit, HomeViewState>(
-          listener: (context, state) {
-            if (state is DeleteTasksLoading) {
-              EasyLoading.show();
-            } else if (state is DeleteTasksFailure) {
-              EasyLoading.dismiss();
-              showToastMessage(state.errMessage);
-            } else if (state is DeleteTasksSuccess) {
-              EasyLoading.dismiss();
-              showToastMessage(state.successMessage);
-              Navigator.pop(context, true);
+      builder: (context) => BlocListener<HomeViewCubit, HomeViewState>(
+        listener: (context, state) {
+          if (state is DeleteTasksLoading) {
+            EasyLoading.show();
+          } else if (state is DeleteTasksFailure) {
+            EasyLoading.dismiss();
+            showToastMessage(state.errMessage);
+          } else if (state is DeleteTasksSuccess) {
+            EasyLoading.dismiss();
+            showToastMessage(state.successMessage);
+            Navigator.pop(context);
+
+            // pop the details view if task deleted from it
+            if (inDetailsView) {
+              Navigator.pop(context);
             }
-          },
-          child: Builder(
-            builder: (context) {
-              return ConfirmAlertDialog(
-                onConfirm: () =>
-                    context.read<HomeViewCubit>().deleteTask(taskId),
-                message: "Are you sure you want to delete this task?",
-              );
-            },
-          ),
+          }
+        },
+        child: ConfirmAlertDialog(
+          onConfirm: () => context.read<HomeViewCubit>().deleteTask(taskId),
+          message: "Are you sure you want to delete this task?",
         ),
       ),
     );

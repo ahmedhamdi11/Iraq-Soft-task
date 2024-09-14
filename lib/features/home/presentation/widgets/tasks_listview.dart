@@ -75,7 +75,8 @@ class _TasksListviewState extends State<TasksListview> {
                 buildWhen: (p, c) =>
                     c is GetTasksLoading ||
                     c is GetTasksFailure ||
-                    c is GetTasksSuccess,
+                    c is GetTasksSuccess ||
+                    c is DeleteTasksSuccess,
                 builder: (context, state) {
                   if (state is GetTasksLoading && cubit.tasksPage == 1) {
                     return const TasksLoadingShimmer();
@@ -107,24 +108,29 @@ class _TasksListviewState extends State<TasksListview> {
                   }
                   return Animate(
                     effects: const [FadeEffect()],
-                    child: ListView.builder(
-                      itemCount: filteredTasks.length + 1,
-                      controller: _scrollController,
-                      padding: const EdgeInsets.only(bottom: 130).h,
-                      itemBuilder: (context, index) {
-                        if (index < filteredTasks.length) {
-                          return TaskCard(task: filteredTasks[index]);
-                        } else {
-                          return state is GetTasksLoading
-                              ? const Center(child: CircularProgressIndicator())
-                              : state is GetTasksFailure
-                                  ? DefaultErrorWidget(
-                                      errMessage: state.errMessage,
-                                      onTryAgainPressed: () => cubit.getTasks(),
-                                    )
-                                  : const SizedBox.shrink();
-                        }
-                      },
+                    child: RefreshIndicator(
+                      onRefresh: () => _onRefresh(),
+                      child: ListView.builder(
+                        itemCount: filteredTasks.length + 1,
+                        controller: _scrollController,
+                        padding: const EdgeInsets.only(bottom: 130).h,
+                        itemBuilder: (context, index) {
+                          if (index < filteredTasks.length) {
+                            return TaskCard(task: filteredTasks[index]);
+                          } else {
+                            return state is GetTasksLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator())
+                                : state is GetTasksFailure
+                                    ? DefaultErrorWidget(
+                                        errMessage: state.errMessage,
+                                        onTryAgainPressed: () =>
+                                            cubit.getTasks(),
+                                      )
+                                    : const SizedBox.shrink();
+                          }
+                        },
+                      ),
                     ),
                   );
                 },

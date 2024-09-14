@@ -10,9 +10,6 @@ import 'package:todo_app/features/Auth/presentation/views/login_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/profile_view.dart';
 import 'package:todo_app/features/Auth/presentation/views/sign_up_view.dart';
 import 'package:todo_app/features/Onboarding/presentation/views/onboarding_view.dart';
-import 'package:todo_app/features/home/data/models/task_model.dart';
-import 'package:todo_app/features/home/data/repos/home_repo.dart';
-import 'package:todo_app/features/home/presentation/manager/cubits/home_view_cubit/home_view_cubit.dart';
 import 'package:todo_app/features/home/presentation/views/add_task_view.dart';
 import 'package:todo_app/features/home/presentation/views/home_view.dart';
 import 'package:todo_app/features/home/presentation/views/sanner_view.dart';
@@ -60,10 +57,7 @@ abstract class AppRouter {
       // home view route
       case homeView:
         return CustomPageRouteBuilder(
-          page: BlocProvider(
-            create: (context) => HomeViewCubit(sl<HomeRepo>())..getTasks(),
-            child: const HomeView(),
-          ),
+          page: const HomeView(),
         );
 
       // profile view route
@@ -77,20 +71,19 @@ abstract class AppRouter {
 
       // task details view route
       case taskDetailsView:
+        final args = settings.arguments as Map<String, dynamic>;
         return CustomPageRouteBuilder(
           transitionType: TransitionTypeEnum.fade,
           page: TaskDetailsView(
-            task: settings.arguments as TaskModel,
+            task: args['task'],
+            showOptions: args['showOptions'] ?? true,
           ),
         );
 
       // scanner view route
       case scannerView:
         return CustomPageRouteBuilder(
-          page: BlocProvider(
-            create: (context) => HomeViewCubit(sl<HomeRepo>()),
-            child: const ScannerView(),
-          ),
+          page: const ScannerView(),
         );
 
       // add task view route

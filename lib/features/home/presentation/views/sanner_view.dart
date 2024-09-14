@@ -40,7 +40,10 @@ class _ScannerViewState extends State<ScannerView> {
     Navigator.pushReplacementNamed(
       context,
       AppRouter.taskDetailsView,
-      arguments: task,
+      arguments: {
+        'task': task,
+        'showOptions': false,
+      },
     );
   }
 

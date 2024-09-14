@@ -13,6 +13,8 @@ import 'package:todo_app/core/services/service_locator.dart';
 import 'package:todo_app/core/utils/app_router.dart';
 import 'package:todo_app/core/utils/app_themes.dart';
 import 'package:todo_app/core/utils/functions.dart';
+import 'package:todo_app/features/home/data/repos/home_repo.dart';
+import 'package:todo_app/features/home/presentation/manager/cubits/home_view_cubit/home_view_cubit.dart';
 import 'package:todo_app/observer.dart';
 
 void main() async {
@@ -51,14 +53,17 @@ class ToDoApp extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) => MaterialApp(
-        builder: EasyLoading.init(),
-        debugShowCheckedModeBanner: false,
-        title: 'ToDo',
-        theme: AppThemes.lightTheme,
-        initialRoute: _initialRoute(),
-        onGenerateRoute: AppRouter.onGenerateRoute,
-        navigatorKey: sl<NavigationService>().navigatorKey,
+      builder: (context, child) => BlocProvider(
+        create: (context) => HomeViewCubit(sl<HomeRepo>())..getTasks(),
+        child: MaterialApp(
+          builder: EasyLoading.init(),
+          debugShowCheckedModeBanner: false,
+          title: 'ToDo',
+          theme: AppThemes.lightTheme,
+          initialRoute: _initialRoute(),
+          onGenerateRoute: AppRouter.onGenerateRoute,
+          navigatorKey: sl<NavigationService>().navigatorKey,
+        ),
       ),
     );
   }
