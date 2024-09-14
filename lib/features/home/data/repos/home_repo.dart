@@ -11,4 +11,12 @@ abstract class HomeRepo {
   Future<Either<Failure, String>> deleteTask(String taskId);
 
   Future<Either<Failure, String>> uploadImage(ImageSource source);
+
+  Future<Either<Failure, Unit>> createTask({
+    required String image,
+    required String title,
+    required String desc,
+    required String priority,
+    required String status,
+  });
 }

@@ -18,3 +18,14 @@ final class UploadImageFailure extends CreateTaskState {
 
   UploadImageFailure(this.errMessage);
 }
+
+/// create task states
+final class CreateTaskLoading extends CreateTaskState {}
+
+final class CreateTaskSuccess extends CreateTaskState {}
+
+final class CreateTaskFailure extends CreateTaskState {
+  final String errMessage;
+
+  CreateTaskFailure(this.errMessage);
+}

@@ -29,7 +29,7 @@ class TaskModel {
     // assign the task status
     TaskStatusEnum taskStatus = TaskStatusEnum.waiting;
     if (json['status'] != null) {
-      if (json['status'] == 'inprogress') {
+      if (json['status'] == 'inProgress') {
         taskStatus = TaskStatusEnum.inProgress;
       } else if (json['status'] == 'finished') {
         taskStatus = TaskStatusEnum.finished;
@@ -42,7 +42,7 @@ class TaskModel {
       if (json['priority'] == 'medium') {
         taskPriority = TaskPriorityEnum.medium;
       } else if (json['priority'] == 'high') {
-        taskPriority = TaskPriorityEnum.heigh;
+        taskPriority = TaskPriorityEnum.high;
       }
     }
 

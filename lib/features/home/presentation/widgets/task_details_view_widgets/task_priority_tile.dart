@@ -54,7 +54,7 @@ class TaskPriorityTile extends StatelessWidget {
         return kBlueColor;
       case TaskPriorityEnum.medium:
         return kPrimaryColor;
-      case TaskPriorityEnum.heigh:
+      case TaskPriorityEnum.high:
         return kOrangeColor;
     }
   }
@@ -65,7 +65,7 @@ class TaskPriorityTile extends StatelessWidget {
         return "Low";
       case TaskPriorityEnum.medium:
         return "Medium";
-      case TaskPriorityEnum.heigh:
+      case TaskPriorityEnum.high:
         return "Heigh";
     }
   }

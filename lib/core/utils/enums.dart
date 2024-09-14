@@ -14,5 +14,5 @@ enum TaskStatusEnum {
 enum TaskPriorityEnum {
   low,
   medium,
-  heigh,
+  high,
 }

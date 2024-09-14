@@ -38,7 +38,7 @@ class TaskPriority extends StatelessWidget {
         return kBlueColor;
       case TaskPriorityEnum.medium:
         return kPrimaryColor;
-      case TaskPriorityEnum.heigh:
+      case TaskPriorityEnum.high:
         return kOrangeColor;
     }
   }
