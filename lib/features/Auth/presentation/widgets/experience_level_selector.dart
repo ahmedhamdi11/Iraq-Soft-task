@@ -15,112 +15,54 @@ class ExperienceLevelSelector extends StatefulWidget {
 }
 
 class _ExperienceLevelSelectorState extends State<ExperienceLevelSelector> {
-  bool _isExpanded = false;
-  late final ScrollController _scrollController;
-
-  List<ExperienceLevelEnum> experience = [
-    ExperienceLevelEnum.fresh,
-    ExperienceLevelEnum.junior,
-    ExperienceLevelEnum.midLevel,
-    ExperienceLevelEnum.senior,
-  ];
-
-  @override
-  void initState() {
-    _scrollController = ScrollController();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          _isExpanded = !_isExpanded;
-        });
-      },
+    return ClipRRect(
       borderRadius: BorderRadius.circular(12.r),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        height: _isExpanded ? 200.h : 50.h,
-        padding: EdgeInsets.only(
-          left: 14,
-          right: 14,
-          bottom: _isExpanded ? 14 : 0,
-        ).w,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: kStrokeColor),
-          color: Colors.white,
+      child: ExpansionTile(
+        minTileHeight: 50.h,
+        title: Text(
+          'Choose experience Level',
+          style: AppStyles.text14.copyWith(
+            color: kBlackColor,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // header
-            SizedBox(
-              height: 48.h,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Choose experience Level',
-                      style: AppStyles.text14.copyWith(
-                        color: kBlackColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Icon(
-                    _isExpanded
-                        ? Icons.keyboard_arrow_up_rounded
-                        : Icons.keyboard_arrow_down_rounded,
-                    size: 24.r,
-                    color: kGreyColor,
-                  ),
-                ],
+        collapsedBackgroundColor: Colors.white,
+        backgroundColor: Colors.white,
+        collapsedShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          side: const BorderSide(color: kStrokeColor),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          side: const BorderSide(color: kStrokeColor),
+        ),
+        children: [
+          for (int i = 0; i < ExperienceLevelEnum.values.length; i++)
+            RadioListTile(
+              dense: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
               ),
-            ),
-
-            // levels list
-            if (_isExpanded)
-              Expanded(
-                child: Scrollbar(
-                  controller: _scrollController,
-                  thumbVisibility: true,
-                  radius: const Radius.circular(10),
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: experience.length,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsetsDirectional.only(end: 20),
-                      child: RadioListTile(
-                        dense: true,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        value: context.read<SignUpCubit>().level ==
-                            experience[index],
-                        title: Text(
-                          experience[index].name,
-                          style: AppStyles.text14.copyWith(
-                            color: kBlackColor,
-                          ),
-                        ),
-                        groupValue: true,
-                        onChanged: (v) => _onLevelChanged(index),
-                      ),
-                    ),
-                  ),
+              value: context.read<SignUpCubit>().level ==
+                  ExperienceLevelEnum.values[i],
+              title: Text(
+                ExperienceLevelEnum.values[i].name,
+                style: AppStyles.text14.copyWith(
+                  color: kBlackColor,
                 ),
               ),
-          ],
-        ),
+              groupValue: true,
+              onChanged: (v) => _onLevelChanged(i),
+            ),
+        ],
       ),
     );
   }
 
   void _onLevelChanged(int index) {
-    context.read<SignUpCubit>().level = experience[index];
+    context.read<SignUpCubit>().level = ExperienceLevelEnum.values[index];
     setState(() {});
   }
 }

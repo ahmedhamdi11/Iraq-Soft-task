@@ -35,6 +35,16 @@ class HomeViewCubit extends Cubit<HomeViewState> {
     );
   }
 
+  Future<void> refreshTasks() async {
+    // reset the pagination
+    tasksPage = 1;
+    isLastPage = false;
+    tasks = [];
+
+    // fetch the tasks
+    await getTasks();
+  }
+
   Future<void> deleteTask(String taskId) async {
     emit(DeleteTasksLoading());
 

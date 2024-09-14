@@ -43,18 +43,6 @@ class _TasksListviewState extends State<TasksListview> {
     });
   }
 
-  Future<void> _onRefresh() async {
-    final cubit = context.read<HomeViewCubit>();
-
-    // reset the pagination
-    cubit.tasksPage = 1;
-    cubit.isLastPage = false;
-    cubit.tasks = [];
-
-    // fetch the tasks
-    await cubit.getTasks();
-  }
-
   @override
   void dispose() {
     _scrollController.dispose();
@@ -67,7 +55,7 @@ class _TasksListviewState extends State<TasksListview> {
 
     return Expanded(
       child: RefreshIndicator(
-        onRefresh: () => _onRefresh(),
+        onRefresh: () => cubit.refreshTasks(),
         child: CustomScrollView(
           slivers: [
             SliverFillRemaining(
@@ -109,7 +97,7 @@ class _TasksListviewState extends State<TasksListview> {
                   return Animate(
                     effects: const [FadeEffect()],
                     child: RefreshIndicator(
-                      onRefresh: () => _onRefresh(),
+                      onRefresh: () => cubit.refreshTasks(),
                       child: ListView.builder(
                         itemCount: filteredTasks.length + 1,
                         controller: _scrollController,

@@ -10,11 +10,23 @@ import 'package:todo_app/core/utils/functions.dart';
 import 'package:todo_app/core/widgets/confirm_alert_dialog.dart';
 import 'package:todo_app/features/Auth/data/repos/auth_repo.dart';
 import 'package:todo_app/features/Auth/presentation/controller/logout_cubit/logout_cubit.dart';
+import 'package:todo_app/features/home/presentation/manager/cubits/home_view_cubit/home_view_cubit.dart';
 import 'package:todo_app/features/home/presentation/widgets/floating_action_buttons.dart';
 import 'package:todo_app/features/home/presentation/widgets/home_view_body.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    context.read<HomeViewCubit>().refreshTasks();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

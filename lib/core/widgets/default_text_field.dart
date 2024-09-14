@@ -58,57 +58,62 @@ class DefaultTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      obscureText: isHiddenPassword,
-      validator: validator,
-      controller: controller,
-      onChanged: onChanged,
-      keyboardType: keyboardType,
-      initialValue: initialValue,
-      focusNode: focusNode,
-      autofocus: autofocus,
-      maxLines: maxLines,
-      maxLength: maxLength,
-      textInputAction: textInputAction,
-      style: textInputStyle ??
-          AppStyles.text14.copyWith(
-            color: textInputColor,
-            fontWeight: FontWeight.w700,
-          ),
-      inputFormatters: inputFormatters,
-      onFieldSubmitted: onFieldSubmitted,
-      onEditingComplete: onEditingComplete,
-      onTap: onTap,
-      onTapOutside: onTapOutside ?? (event) => FocusScope.of(context).unfocus(),
-
-      // text field decoration
-      decoration: InputDecoration(
-        enabledBorder: _fieldBorder(),
-        border: _fieldBorder(),
-        hintText: hintText,
-        hintStyle: hintStyle ?? AppStyles.text14.copyWith(color: kStrokeColor),
-        prefixIcon: prefix,
-        suffixIcon: suffix,
-        suffixIconColor: WidgetStateColor.resolveWith(
-          (states) => states.contains(WidgetState.focused)
-              ? kPrimaryColor
-              : kStrokeColor,
-        ),
-        filled: true,
-        fillColor: Colors.white,
-        isDense: true,
-        contentPadding: contentPadding ??
-            EdgeInsets.symmetric(
-              horizontal: 16.w,
-              vertical: 14.h,
+    return SizedBox(
+      height: 50.h,
+      child: TextFormField(
+        obscureText: isHiddenPassword,
+        validator: validator,
+        controller: controller,
+        onChanged: onChanged,
+        keyboardType: keyboardType,
+        initialValue: initialValue,
+        focusNode: focusNode,
+        autofocus: autofocus,
+        maxLines: maxLines,
+        maxLength: maxLength,
+        textInputAction: textInputAction,
+        style: textInputStyle ??
+            AppStyles.text14.copyWith(
+              color: textInputColor,
+              fontWeight: FontWeight.w700,
             ),
-        prefixIconConstraints: BoxConstraints(
-          minHeight: 35.h,
-          minWidth: 48.w,
-        ),
-        suffixIconConstraints: BoxConstraints(
-          minHeight: 35.h,
-          minWidth: 48.w,
+        inputFormatters: inputFormatters,
+        onFieldSubmitted: onFieldSubmitted,
+        onEditingComplete: onEditingComplete,
+        onTap: onTap,
+        onTapOutside:
+            onTapOutside ?? (event) => FocusScope.of(context).unfocus(),
+
+        // text field decoration
+        decoration: InputDecoration(
+          enabledBorder: _fieldBorder(),
+          border: _fieldBorder(),
+          hintText: hintText,
+          hintStyle:
+              hintStyle ?? AppStyles.text14.copyWith(color: kStrokeColor),
+          prefixIcon: prefix,
+          suffixIcon: suffix,
+          suffixIconColor: WidgetStateColor.resolveWith(
+            (states) => states.contains(WidgetState.focused)
+                ? kPrimaryColor
+                : kStrokeColor,
+          ),
+          filled: true,
+          fillColor: Colors.white,
+          isDense: true,
+          contentPadding: contentPadding ??
+              EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 14.h,
+              ),
+          prefixIconConstraints: BoxConstraints(
+            minHeight: 35.h,
+            minWidth: 48.w,
+          ),
+          suffixIconConstraints: BoxConstraints(
+            minHeight: 35.h,
+            minWidth: 48.w,
+          ),
         ),
       ),
     );
